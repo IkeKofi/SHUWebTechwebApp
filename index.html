@@ -1,20 +1,7 @@
 <html>
     <head>
         <title>Hello Wold, from Kofi</title>
-        <style>
-            body {
-                background-color: powderblue;
-            }
-            h1 {
-                color: blue;
-                font-family: verdana;
-                text-align: center;
-            }
-            p {
-                font-family: courier;
-                font-size: 16px;
-            }
-        </style>
+        <link rel="stylesheet" href="styles.css">
     </head>
 
     <body>
@@ -24,13 +11,13 @@
 
         <hr>
 
-        <h2 style="color:tomato;">Attributes and colours</h2>
+        <h2 class="tomato">Attributes and colours</h2>
 
         <p>Attributes go in the start tag, like <b>name="value"</b>. This link uses href and title: <a href="https://www.w3schools.com/html/html_css.asp" title="W3Schools CSS page">HTML CSS page</a></p>
 
-        <p style="color:red;">This paragraph is red because of an inline style.</p>
+        <p class="red">This paragraph is red. The colour comes from the css file.</p>
 
-        <p style="background-color:#ff6347; color:white;">This one uses a hex colour for the background.</p>
+        <p class="hexbg">This one uses a hex colour for the background.</p>
 
         <hr>
 
@@ -61,6 +48,6 @@ My Bonnie lies over the ocean.
 My Bonnie lies over the sea.
         </pre>
 
-        <p style="border:2px solid violet; padding:10px; margin:20px;">This paragraph has a border, some padding inside it, and a margin outside it.</p>
+        <p class="box">This paragraph has a border, some padding inside it, and a margin outside it.</p>
     </body>
 </html>
