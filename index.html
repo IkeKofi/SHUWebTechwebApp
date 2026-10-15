@@ -13,6 +13,8 @@
 
         <p>This page is especially for immigrants and ethnic minorities who do not know how the health system works. We will explain things in a simple way, like who to see, where to go, and what to ask.</p>
 
+        <p id="greeting">Choose who this is for below, and the greeting will change.</p>
+
         <hr>
 
         <h2>What you can learn here</h2>
@@ -26,7 +28,7 @@
 
         <h2>Tell us what you need</h2>
 
-        <form>
+        <form id="needForm">
             <p>Who is this for?</p>
             <input type="radio" id="pregnant" name="who" value="pregnant">
             <label for="pregnant">I am pregnant</label><br>
@@ -47,7 +49,23 @@
             </p>
 
             <input type="submit" value="Show me">
+            <button type="button" id="clearBtn">Clear</button>
         </form>
+
+        <div id="section-appointments" class="topic-section">
+            <h3>Who to see and where to go</h3>
+            <p>In the UK you usually see a midwife. If you do not know how to book, ask a GP. You can ask for an interpreter. A partner or family member can come too, if you want them there.</p>
+        </div>
+
+        <div id="section-signs" class="topic-section urgent">
+            <h3>Signs that mean you should get help</h3>
+            <p>Call for help if there is bleeding, the baby is moving less, a bad headache, or the waters break. Do not wait. If it feels like an emergency, call 999.</p>
+        </div>
+
+        <div id="section-pack" class="topic-section">
+            <h3>What to pack for the birth</h3>
+            <p>Pack notes from your appointments, any medicine, comfortable clothes, a phone charger, snacks, and the number of the person you will call.</p>
+        </div>
 
         <div id="answer"></div>
 
