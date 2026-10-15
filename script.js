@@ -64,6 +64,9 @@ function showAnswer() {
     var questionText = question.value;
 
     if (wantAppointments == false && wantSigns == false && wantPack == false && questionText.trim() == "") {
+        sectionAppointments.style.display = "none";
+        sectionSigns.style.display = "none";
+        sectionPack.style.display = "none";
         addParagraph(answer, "Please choose at least one topic, or type a question.");
         answer.style.display = "block";
         return;
@@ -108,18 +111,6 @@ pregnant.onclick = function () {
 
 family.onclick = function () {
     updateGreeting();
-};
-
-appointments.onclick = function () {
-    showHideSections();
-};
-
-signs.onclick = function () {
-    showHideSections();
-};
-
-pack.onclick = function () {
-    showHideSections();
 };
 
 form.onsubmit = function () {
