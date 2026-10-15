@@ -121,3 +121,40 @@ form.onsubmit = function () {
 clearBtn.onclick = function () {
     clearAll();
 };
+
+var quoteBtn = document.getElementById("quoteBtn");
+var quoteBox = document.getElementById("quoteBox");
+
+quoteBtn.onclick = function () {
+    quoteBox.style.display = "block";
+    quoteBox.innerHTML = "<p>Loading a message...</p>";
+
+    fetch("https://api.freeapi.app/api/v1/public/quotes?limit=10")
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (result) {
+            var list = result.data.data;
+            var index = Math.floor(Math.random() * list.length);
+            var quote = list[index];
+
+            while (quoteBox.firstChild) {
+                quoteBox.removeChild(quoteBox.firstChild);
+            }
+
+            var message = document.createElement("p");
+            message.innerHTML = quote.content;
+            quoteBox.appendChild(message);
+
+            var author = document.createElement("p");
+            author.innerHTML = "<i>— " + quote.author + "</i>";
+            quoteBox.appendChild(author);
+
+            var tip = document.createElement("p");
+            tip.innerHTML = "<small>Read this slowly while you breathe out.</small>";
+            quoteBox.appendChild(tip);
+        })
+        .catch(function () {
+            quoteBox.innerHTML = "<p>Sorry, the message could not load. Please try again.</p>";
+        });
+};
