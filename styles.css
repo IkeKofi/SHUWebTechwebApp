@@ -27,8 +27,11 @@ input[type="submit"],
 }
 
 #greeting {
+    display: none;
     background-color: #f3e8ff;
+    border: 2px solid #c9b3e6;
     padding: 8px;
+    margin-top: 12px;
 }
 
 .topic-section {

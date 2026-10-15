@@ -17,10 +17,13 @@ var sectionPack = document.getElementById("section-pack");
 function updateGreeting() {
     if (family.checked == true) {
         greeting.innerHTML = "You can use this to help the person who is pregnant.";
+        greeting.style.display = "block";
     } else if (pregnant.checked == true) {
         greeting.innerHTML = "This is for you.";
+        greeting.style.display = "block";
     } else {
-        greeting.innerHTML = "Choose who this is for below, and the greeting will change.";
+        greeting.innerHTML = "";
+        greeting.style.display = "none";
     }
 }
 
@@ -66,38 +69,16 @@ function showAnswer() {
         return;
     }
 
-    var title = document.createElement("h3");
-    title.innerHTML = "Your answers";
-    answer.appendChild(title);
-
-    if (family.checked == true) {
-        addParagraph(answer, "You can use this to help the person who is pregnant.");
-    } else if (pregnant.checked == true) {
-        addParagraph(answer, "This is for you.");
-    }
-
-    if (wantAppointments == true) {
-        addParagraph(answer, "<b>Who to see and where to go.</b> In the UK you usually see a midwife. If you do not know how to book, ask a GP. You can ask for an interpreter.");
-    }
-
-    if (wantSigns == true) {
-        var urgent = document.createElement("div");
-        urgent.className = "urgent-box";
-        addParagraph(urgent, "<b>Signs that mean you should get help.</b> Call for help if there is bleeding, the baby is moving less, a bad headache, or the waters break. Do not wait. If it feels like an emergency, call 999.");
-        answer.appendChild(urgent);
-    }
-
-    if (wantPack == true) {
-        addParagraph(answer, "<b>What to pack for the birth.</b> Pack notes from your appointments, any medicine, comfortable clothes, a phone charger, snacks, and the number of the person you will call.");
-    }
+    showHideSections();
 
     if (questionText.trim() != "") {
         var safeQuestion = questionText.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         addParagraph(answer, "You asked: " + safeQuestion);
         addParagraph(answer, "We will add an answer to questions like this later.");
+        answer.style.display = "block";
+    } else {
+        answer.style.display = "none";
     }
-
-    answer.style.display = "block";
 }
 
 function clearAll() {
@@ -117,7 +98,8 @@ function clearAll() {
     }
     answer.style.display = "none";
 
-    greeting.innerHTML = "Choose who this is for below, and the greeting will change.";
+    greeting.innerHTML = "";
+    greeting.style.display = "none";
 }
 
 pregnant.onclick = function () {
