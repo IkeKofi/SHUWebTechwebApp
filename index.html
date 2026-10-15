@@ -24,6 +24,31 @@
             <li>What to pack and who to call when labour starts</li>
         </ul>
 
+        <h2>Tell us what you need</h2>
+
+        <form>
+            <p>Who is this for?</p>
+            <input type="radio" id="pregnant" name="who" value="pregnant">
+            <label for="pregnant">I am pregnant</label><br>
+            <input type="radio" id="family" name="who" value="family">
+            <label for="family">I am a partner or family member</label>
+
+            <p>What do you want to learn?</p>
+            <input type="checkbox" id="appointments" name="topic" value="appointments">
+            <label for="appointments">Who to see and where to go</label><br>
+            <input type="checkbox" id="signs" name="topic" value="signs">
+            <label for="signs">Signs that mean I should get help</label><br>
+            <input type="checkbox" id="pack" name="topic" value="pack">
+            <label for="pack">What to pack for the birth</label>
+
+            <p>
+                <label for="question">A question you want answered:</label><br>
+                <input type="text" id="question" name="question">
+            </p>
+
+            <input type="submit" value="Show me">
+        </form>
+
         <p class="note">This is only the first page. More will be added later.</p>
     </body>
 </html>

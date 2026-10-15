@@ -13,6 +13,13 @@ h2 {
     color: #c48bb0;
 }
 
+input[type="submit"] {
+    background-color: #f3e8ff;
+    color: #5c4a72;
+    border: 2px solid #c9b3e6;
+    padding: 6px 12px;
+}
+
 .note {
     background-color: #f3e8ff;
     border: 2px solid #c9b3e6;
