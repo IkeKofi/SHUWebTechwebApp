@@ -44,7 +44,7 @@ $(document).ready(function () {
             $("#section-appointments").slideUp();
             $("#section-signs").slideUp();
             $("#section-pack").slideUp();
-            $("#answer").html("<p>Please choose at least one topic, or type a question.</p>").fadeIn();
+            $("#answer").html("<p class='mb-0'>Please choose at least one topic, or type a question.</p>").fadeIn();
             return;
         }
 
@@ -54,7 +54,7 @@ $(document).ready(function () {
             var safeQuestion = questionText.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             $("#answer").html(
                 "<p>You asked: " + safeQuestion + "</p>" +
-                "<p>We will add an answer to questions like this later.</p>"
+                "<p class='mb-0'>We will add an answer to questions like this later.</p>"
             ).fadeIn();
         } else {
             $("#answer").hide();
@@ -67,7 +67,8 @@ $(document).ready(function () {
         $("#section-signs").slideUp();
         $("#section-pack").slideUp();
         $("#answer").empty().hide();
-        $("#quoteBox").empty().hide();
+        $("#quoteBox").hide();
+        $("#quoteBoxBody").empty();
         $("#greeting").html("").hide();
     }
 
@@ -85,7 +86,8 @@ $(document).ready(function () {
     });
 
     $("#quoteBtn").click(function () {
-        $("#quoteBox").html("<p>Loading a message...</p>").fadeIn();
+        $("#quoteBoxBody").html("<p class='mb-0'>Loading a message...</p>");
+        $("#quoteBox").fadeIn();
 
         $.getJSON("https://api.freeapi.app/api/v1/public/quotes?limit=10")
             .done(function (result) {
@@ -93,14 +95,16 @@ $(document).ready(function () {
                 var index = Math.floor(Math.random() * list.length);
                 var quote = list[index];
 
-                $("#quoteBox").html(
+                $("#quoteBoxBody").html(
                     "<p>" + quote.content + "</p>" +
                     "<p><i>— " + quote.author + "</i></p>" +
-                    "<p><small>Read this slowly while you breathe out.</small></p>"
-                ).fadeIn();
+                    "<p class='mb-0'><small>Read this slowly while you breathe out.</small></p>"
+                );
+                $("#quoteBox").fadeIn();
             })
             .fail(function () {
-                $("#quoteBox").html("<p>Sorry, the message could not load. Please try again.</p>").fadeIn();
+                $("#quoteBoxBody").html("<p class='mb-0'>Sorry, the message could not load. Please try again.</p>");
+                $("#quoteBox").fadeIn();
             });
     });
 
