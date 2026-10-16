@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img">
+  <title>Pregnancy Education logo</title>
+  <circle cx="60" cy="60" r="56" fill="#f3e8ff" stroke="#9b7eb8" stroke-width="4"/>
+  <circle cx="48" cy="48" r="14" fill="#c48bb0"/>
+  <circle cx="72" cy="52" r="10" fill="#9b7eb8"/>
+  <text x="60" y="98" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="12" fill="#5c4a72">PE</text>
+</svg>

@@ -1,10 +1,48 @@
+/* Mobile first - small screens first */
+
 body {
     background-color: #fff8fb;
     color: #5c4a72;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.skip-link {
+    position: absolute;
+    left: -999px;
+}
+
+.skip-link:focus {
+    left: 8px;
+    top: 8px;
+    background-color: #fff;
+    border: 2px solid #9b7eb8;
+    padding: 6px 10px;
+    z-index: 10;
+}
+
+header {
+    margin-bottom: 12px;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 10px auto;
+}
+
+.urgent-label {
+    color: #a14d6a;
+    margin-bottom: 4px;
+}
+
+.topic-section.urgent {
+    outline: 2px solid #a14d6a;
 }
 
 h1 {
     color: #9b7eb8;
+    font-size: 1.5rem;
 }
 
 h2,
@@ -13,12 +51,69 @@ h3,
     color: #c48bb0;
 }
 
+.nav-list {
+    list-style: none;
+    padding: 8px;
+    margin: 0 0 16px 0;
+    text-align: center;
+    background-color: #f3e8ff;
+    border: 1px solid #c9b3e6;
+}
+
+.nav-list li {
+    display: block;
+    margin: 6px 0;
+}
+
+.nav-list a {
+    color: #9b7eb8;
+    text-decoration: none;
+}
+
+.nav-list a:hover,
+.nav-list a:focus {
+    text-decoration: underline;
+    color: #7f6499;
+}
+
+/* Attribute selectors */
+a[href^="#"] {
+    font-weight: bold;
+}
+
+input[type="text"],
+textarea[name="question"],
+select[name="language"],
+select[name="quoteTheme"] {
+    border: 2px solid #c9b3e6;
+}
+
+input[type="text"]:focus,
+textarea[name="question"]:focus,
+select[name="language"]:focus,
+select[name="quoteTheme"]:focus {
+    border-color: #9b7eb8;
+    outline: 2px solid #c9b3e6;
+}
+
+select[name="language"]:required:invalid,
+select[name="quoteTheme"]:required:invalid {
+    border-color: #c48bb0;
+}
+
+input[type="radio"]:checked + label,
+input[type="checkbox"]:checked + label {
+    color: #9b7eb8;
+    font-weight: bold;
+}
+
 .btn-primary {
     background-color: #9b7eb8;
     border-color: #9b7eb8;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus {
     background-color: #7f6499;
     border-color: #7f6499;
 }
@@ -28,7 +123,8 @@ h3,
     border-color: #c9b3e6;
 }
 
-.btn-outline-secondary:hover {
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
     background-color: #f3e8ff;
     color: #5c4a72;
     border-color: #c9b3e6;
@@ -53,14 +149,81 @@ h3,
 
 #greeting,
 #answer,
-#quoteBox {
+#quoteBox,
+#dogBox {
     display: none;
 }
 
-#quoteBox {
+#quoteBox,
+#dogBox {
     border-color: #c9b3e6;
+}
+
+#dogBox img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
 }
 
 .note {
     background-color: #f3e8ff;
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+footer {
+    margin-top: 16px;
+    padding-top: 8px;
+}
+
+/* Larger phones and up */
+@media (min-width: 576px) {
+    body {
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .nav-list li {
+        display: inline;
+        margin: 0 10px;
+    }
+}
+
+/* Tablets and up */
+@media (min-width: 768px) {
+    body {
+        font-size: 17px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .nav-list {
+        padding: 10px 16px;
+    }
+
+    input[type="text"],
+    textarea[name="question"],
+    select[name="language"],
+    select[name="quoteTheme"] {
+        max-width: 500px;
+    }
+}
+
+/* Desktops */
+@media (min-width: 992px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    .footer-text {
+        font-size: 0.95rem;
+    }
 }

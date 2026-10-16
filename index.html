@@ -9,117 +9,178 @@
     </head>
 
     <body>
+        <a class="skip-link" href="#main-content">Skip to main content</a>
+
         <div class="container py-4">
-            <h1 class="text-center mb-4">Pregnancy Education and Birth Preparedness</h1>
-
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <p>Hello. This is a simple health education page. It is about learning what happens in pregnancy and how to get ready for the birth.</p>
-
-                    <p>It is for people who are pregnant, and for partners or family who want to learn as well.</p>
-
-                    <p>This page is especially for immigrants and ethnic minorities who do not know how the health system works. We will explain things in a simple way, like who to see, where to go, and what to ask.</p>
+            <header>
+                <div class="brand text-center mb-3">
+                    <img src="logo.svg" alt="Pregnancy Education and Birth Preparedness logo" width="90" height="90" class="logo">
+                    <h1 class="mb-0">Pregnancy Education and Birth Preparedness</h1>
                 </div>
 
-                <div class="col-md-6">
-                    <h2>What you can learn here</h2>
-                    <ul>
-                        <li>How to look after yourself in pregnancy</li>
-                        <li>What to expect as the weeks go on</li>
-                        <li>Signs that mean you should get help</li>
-                        <li>What to pack and who to call when labour starts</li>
+                <nav aria-label="Page sections">
+                    <ul class="nav-list">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#form-section">Form</a></li>
+                        <li><a href="#coping">Coping</a></li>
+                        <li><a href="#quote">Quote</a></li>
                     </ul>
-                </div>
-            </div>
+                </nav>
+            </header>
 
-            <hr>
+            <main id="main-content" tabindex="-1">
+                <section id="about" class="mb-4" aria-labelledby="about-heading">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 id="about-heading">About this page</h2>
+                            <p>Hello. This is a simple health education page. It is about learning what happens in pregnancy and how to get ready for the birth.</p>
 
-            <h2>Tell us what you need</h2>
+                            <p>It is for people who are pregnant, and for partners or family who want to learn as well.</p>
 
-            <form id="needForm" class="mb-3">
-                <p class="fw-bold">Who is this for?</p>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="pregnant" name="who" value="pregnant">
-                    <label class="form-check-label" for="pregnant">I am pregnant</label>
-                </div>
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="radio" id="family" name="who" value="family">
-                    <label class="form-check-label" for="family">I am a partner or family member</label>
-                </div>
+                            <p>This page is especially for immigrants and ethnic minorities who do not know how the health system works. We will explain things in a simple way, like who to see, where to go, and what to ask.</p>
+                        </div>
 
-                <p class="fw-bold">What do you want to learn?</p>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="appointments" name="topic" value="appointments">
-                    <label class="form-check-label" for="appointments">Who to see and where to go</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="signs" name="topic" value="signs">
-                    <label class="form-check-label" for="signs">Signs that mean I should get help</label>
-                </div>
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" id="pack" name="topic" value="pack">
-                    <label class="form-check-label" for="pack">What to pack for the birth</label>
-                </div>
+                        <div class="col-md-6">
+                            <h2>What you can learn here</h2>
+                            <ul>
+                                <li>How to look after yourself in pregnancy</li>
+                                <li>What to expect as the weeks go on</li>
+                                <li>Signs that mean you should get help</li>
+                                <li>What to pack and who to call when labour starts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
 
-                <div class="mb-3">
-                    <label class="form-label" for="question">A question you want answered:</label>
-                    <input class="form-control" type="text" id="question" name="question">
-                </div>
+                <hr>
 
-                <button type="submit" class="btn btn-primary me-2">Show me</button>
-                <button type="button" id="clearBtn" class="btn btn-outline-secondary">Clear</button>
-            </form>
+                <section id="form-section" class="mb-4" aria-labelledby="form-heading">
+                    <h2 id="form-heading">Tell us what you need</h2>
 
-            <div id="greeting" class="alert alert-info"></div>
+                    <form id="needForm" class="mb-3">
+                        <p class="fw-bold">Who is this for? <span class="text-danger">*</span></p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="pregnant" name="who" value="pregnant" required>
+                            <label class="form-check-label" for="pregnant">I am pregnant</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" id="family" name="who" value="family">
+                            <label class="form-check-label" for="family">I am a partner or family member</label>
+                        </div>
 
-            <div id="section-appointments" class="card topic-section mb-3">
-                <div class="card-body">
-                    <h3 class="card-title">Who to see and where to go</h3>
-                    <p class="card-text">In the UK you usually see a midwife. If you do not know how to book, ask a GP. You can ask for an interpreter. A partner or family member can come too, if you want them there.</p>
-                </div>
-            </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="language">Preferred language <span class="text-danger">*</span></label>
+                            <select class="form-select" id="language" name="language" required>
+                                <option value="">Please choose</option>
+                                <option value="English">English</option>
+                                <option value="Arabic">Arabic</option>
+                                <option value="Urdu">Urdu</option>
+                                <option value="Polish">Polish</option>
+                                <option value="French">French</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
 
-            <div id="section-signs" class="card topic-section urgent mb-3">
-                <div class="card-body">
-                    <h3 class="card-title">Signs that mean you should get help</h3>
-                    <p class="card-text">Call for help if there is bleeding, the baby is moving less, a bad headache, or the waters break. Do not wait. If it feels like an emergency, call 999.</p>
-                </div>
-            </div>
+                        <p class="fw-bold">What do you want to learn? <span class="text-danger">*</span></p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="appointments" name="topic" value="appointments">
+                            <label class="form-check-label" for="appointments">Who to see and where to go</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="signs" name="topic" value="signs">
+                            <label class="form-check-label" for="signs">Signs that mean I should get help</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="pack" name="topic" value="pack">
+                            <label class="form-check-label" for="pack">What to pack for the birth</label>
+                        </div>
 
-            <div id="section-pack" class="card topic-section mb-3">
-                <div class="card-body">
-                    <h3 class="card-title">What to pack for the birth</h3>
-                    <p class="card-text">Pack notes from your appointments, any medicine, comfortable clothes, a phone charger, snacks, and the phone number of the person you will call for support.</p>
-                </div>
-            </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="quoteTheme">Calm quote theme (sent to the quotes API) <span class="text-danger">*</span></label>
+                            <select class="form-select" id="quoteTheme" name="quoteTheme" required>
+                                <option value="">Please choose</option>
+                                <option value="hope">Hope</option>
+                                <option value="love">Love</option>
+                                <option value="life">Life</option>
+                                <option value="peace">Peace</option>
+                                <option value="strength">Strength</option>
+                            </select>
+                        </div>
 
-            <div id="answer" class="alert alert-secondary"></div>
+                        <div class="mb-3">
+                            <label class="form-label" for="question">A word or short question (also used to search quotes) <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="question" name="question" rows="3" placeholder="e.g. hope, calm, or a short question" required></textarea>
+                        </div>
 
-            <hr>
+                        <button type="submit" class="btn btn-primary me-2">Show me</button>
+                        <button type="button" id="clearBtn" class="btn btn-outline-secondary">Clear</button>
+                    </form>
 
-            <h2>Coping with labour pain</h2>
+                    <div id="greeting" class="alert alert-info" aria-hidden="true" hidden></div>
 
-            <div class="alert alert-warning">
-                These are simple ideas only. They are not medical advice. If you are worried, call your midwife or 999.
-            </div>
+                    <div id="section-appointments" class="card topic-section mb-3" aria-hidden="true" hidden>
+                        <div class="card-body">
+                            <h3 class="card-title">Who to see and where to go</h3>
+                            <p class="card-text">In the UK you usually see a midwife. If you do not know how to book, ask a GP. You can ask for an interpreter. A partner or family member can come too, if you want them there.</p>
+                        </div>
+                    </div>
 
-            <ul>
-                <li>Breathe slowly in through your nose and out through your mouth</li>
-                <li>Change position, for example stand, sit on a chair, or lean forward</li>
-                <li>Ask someone to rub your back or hold your hand</li>
-                <li>Focus on one thing for a short time, like a message or a picture</li>
-            </ul>
+                    <div id="section-signs" class="card topic-section urgent mb-3" aria-hidden="true" hidden role="region" aria-label="Urgent warning signs">
+                        <div class="card-body">
+                            <p class="urgent-label"><strong>Urgent:</strong></p>
+                            <h3 class="card-title">Signs that mean you should get help</h3>
+                            <p class="card-text">Call for help if there is bleeding, the baby is moving less, a bad headache, or the waters break. Do not wait. If it feels like an emergency, call 999.</p>
+                        </div>
+                    </div>
 
-            <h3>A calm message for focus</h3>
+                    <div id="section-pack" class="card topic-section mb-3" aria-hidden="true" hidden>
+                        <div class="card-body">
+                            <h3 class="card-title">What to pack for the birth</h3>
+                            <p class="card-text">Pack notes from your appointments, any medicine, comfortable clothes, a phone charger, snacks, and the phone number of the person you will call for support.</p>
+                        </div>
+                    </div>
 
-            <p>Press the button to get a short quote from the FreeAPI website. You can use it as a small diversion while you practise slow breathing.</p>
+                    <div id="answer" class="alert alert-secondary" aria-live="polite" aria-hidden="true" hidden></div>
+                </section>
 
-            <button type="button" id="quoteBtn" class="btn btn-primary mb-3">Show me a calm message</button>
-            <div id="quoteBox" class="card">
-                <div class="card-body" id="quoteBoxBody"></div>
-            </div>
+                <hr>
 
-            <p class="note alert alert-light border mt-4">This is only the first page. More will be added later.</p>
+                <section id="coping" class="mb-4" aria-labelledby="coping-heading">
+                    <h2 id="coping-heading">Coping with labour pain</h2>
+
+                    <div class="alert alert-warning" role="status">
+                        <strong>Important:</strong> These are simple ideas only. They are not medical advice. If you are worried, call your midwife or 999.
+                    </div>
+
+                    <ul>
+                        <li>Breathe slowly in through your nose and out through your mouth</li>
+                        <li>Change position, for example stand, sit on a chair, or lean forward</li>
+                        <li>Ask someone to rub your back or hold your hand</li>
+                        <li>Focus on one thing for a short time, like a message or a picture</li>
+                    </ul>
+                </section>
+
+                <section id="quote" class="mb-4" aria-labelledby="quote-heading">
+                    <h2 id="quote-heading">A calm message for focus</h2>
+
+                    <p>Choose a quote theme and type a word in the form, then press Show me. The page calls FreeAPI twice: once for a quote, and once for a soft dog picture you can look at while you breathe.</p>
+
+                    <button type="button" id="quoteBtn" class="btn btn-primary mb-3">Show me a calm message</button>
+                    <div id="quoteBox" class="card mb-3" aria-hidden="true" hidden>
+                        <div class="card-body" id="quoteBoxBody"></div>
+                    </div>
+
+                    <div id="dogBox" class="card" aria-hidden="true" hidden>
+                        <div class="card-body" id="dogBoxBody"></div>
+                    </div>
+                </section>
+            </main>
+
+            <footer>
+                <p class="note alert alert-light border mt-4">This is only the first page. More will be added later.</p>
+                <p class="footer-text">Pregnancy Education and Birth Preparedness. Simple information for people new to the UK health system.</p>
+                <p class="footer-text"><a href="#main-content">Back to top</a></p>
+            </footer>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
