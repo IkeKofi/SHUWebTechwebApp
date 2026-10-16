@@ -1,4 +1,5 @@
 /* Mobile first - small screens first */
+/* Own CSS for layout, colours, forms and buttons. */
 
 body {
     background-color: #fff8fb;
@@ -6,6 +7,13 @@ body {
     font-family: Verdana, Arial, sans-serif;
     font-size: 15px;
     line-height: 1.5;
+    margin: 0;
+}
+
+.page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px;
 }
 
 .skip-link {
@@ -26,9 +34,22 @@ header {
     margin-bottom: 12px;
 }
 
+.brand {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
 .logo {
     display: block;
     margin: 0 auto 10px auto;
+}
+
+.block {
+    margin-bottom: 24px;
+}
+
+.about-grid {
+    display: block;
 }
 
 .urgent-label {
@@ -43,12 +64,12 @@ header {
 h1 {
     color: #9b7eb8;
     font-size: 1.5rem;
+    margin: 0;
 }
 
 h2,
-h3,
-.card-title {
-    color: #c48bb0;
+h3 {
+    color: #8a5a78;
 }
 
 .nav-list {
@@ -81,14 +102,57 @@ a[href^="#"] {
     font-weight: bold;
 }
 
-input[type="text"],
+.form-group {
+    margin-bottom: 16px;
+    border: none;
+    padding: 0;
+}
+
+fieldset.form-group {
+    border: 1px solid #c9b3e6;
+    padding: 10px 12px;
+    border-radius: 4px;
+}
+
+fieldset.form-group legend {
+    font-weight: bold;
+    padding: 0 4px;
+    color: #5c4a72;
+}
+
+.required {
+    color: #a14d6a;
+}
+
+.choice {
+    margin: 6px 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.choice label {
+    display: inline;
+    margin-left: 4px;
+}
+
 textarea[name="question"],
 select[name="language"],
 select[name="quoteTheme"] {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     border: 2px solid #c9b3e6;
+    padding: 8px;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1em;
+    background-color: #fff;
+    color: #5c4a72;
 }
 
-input[type="text"]:focus,
 textarea[name="question"]:focus,
 select[name="language"]:focus,
 select[name="quoteTheme"]:focus {
@@ -107,38 +171,73 @@ input[type="checkbox"]:checked + label {
     font-weight: bold;
 }
 
-.btn-primary {
-    background-color: #9b7eb8;
-    border-color: #9b7eb8;
+.btn-main,
+.btn-clear {
+    display: inline-block;
+    margin: 4px 8px 4px 0;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1em;
+    cursor: pointer;
 }
 
-.btn-primary:hover,
-.btn-primary:focus {
+.btn-main {
+    background-color: #9b7eb8;
+    border: 1px solid #9b7eb8;
+    color: #fff;
+}
+
+.btn-main:hover,
+.btn-main:focus {
     background-color: #7f6499;
     border-color: #7f6499;
 }
 
-.btn-outline-secondary {
+.btn-clear {
+    background-color: #fff;
     color: #5c4a72;
-    border-color: #c9b3e6;
+    border: 1px solid #c9b3e6;
 }
 
-.btn-outline-secondary:hover,
-.btn-outline-secondary:focus {
+.btn-clear:hover,
+.btn-clear:focus {
     background-color: #f3e8ff;
-    color: #5c4a72;
-    border-color: #c9b3e6;
 }
 
-.alert-info {
+.info-box,
+.result-box,
+.warn-box,
+.topic-box,
+.note {
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 4px;
+}
+
+.info-box {
     background-color: #f3e8ff;
-    border-color: #c9b3e6;
+    border: 1px solid #c9b3e6;
     color: #5c4a72;
+}
+
+.result-box {
+    background-color: #f7f2fa;
+    border: 1px solid #c9b3e6;
+}
+
+.warn-box {
+    background-color: #fff6e8;
+    border: 1px solid #e0c48a;
+}
+
+.topic-box {
+    border: 1px solid #c9b3e6;
+    background-color: #fff;
 }
 
 .topic-section {
     display: none;
-    border-color: #c9b3e6;
 }
 
 .topic-section.urgent {
@@ -154,11 +253,6 @@ input[type="checkbox"]:checked + label {
     display: none;
 }
 
-#quoteBox,
-#dogBox {
-    border-color: #c9b3e6;
-}
-
 #dogBox img {
     max-width: 100%;
     height: auto;
@@ -167,6 +261,7 @@ input[type="checkbox"]:checked + label {
 
 .note {
     background-color: #f3e8ff;
+    border: 1px solid #c9b3e6;
 }
 
 .footer-text {
@@ -205,11 +300,20 @@ footer {
         font-size: 2rem;
     }
 
+    .page {
+        padding: 24px;
+    }
+
     .nav-list {
         padding: 10px 16px;
     }
 
-    input[type="text"],
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
     textarea[name="question"],
     select[name="language"],
     select[name="quoteTheme"] {

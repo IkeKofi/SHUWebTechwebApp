@@ -66,110 +66,167 @@ $(document).ready(function () {
             .replace(/>/g, "&gt;");
     }
 
-    function wordFromTopics() {
-        if ($("#signs").is(":checked")) {
-            return "life";
+    function getQuestionWord() {
+        var text = $("#question").val().trim().toLowerCase();
+
+        if (text == "") {
+            return "";
         }
+
+        var words = text.split(" ");
+        var word = words[0];
+
+        for (var i = 0; i < words.length; i++) {
+            if (words[i].length > 3) {
+                word = words[i];
+                break;
+            }
+        }
+
+        return word;
+    }
+
+    function getChosenTopics() {
+        var topics = [];
+
         if ($("#appointments").is(":checked")) {
-            return "hope";
+            topics.push("who to see and where to go");
+        }
+        if ($("#signs").is(":checked")) {
+            topics.push("urgent warning signs");
         }
         if ($("#pack").is(":checked")) {
-            return "home";
+            topics.push("what to pack");
         }
+
+        return topics;
+    }
+
+    // Shared checks for Show me and the calm-message button
+    function getFormError() {
+        var who = $("input[name='who']:checked").val();
+        var language = $("#language").val();
+        var quoteTheme = $("#quoteTheme").val();
+        var questionText = $("#question").val();
+        var topics = getChosenTopics();
+
+        if (who == undefined || who == "") {
+            return "Please choose who this is for.";
+        }
+
+        if (language == "") {
+            return "Please choose your preferred language.";
+        }
+
+        if (topics.length == 0) {
+            return "Please choose at least one topic to learn.";
+        }
+
+        if (quoteTheme == "") {
+            return "Please choose a calm quote theme.";
+        }
+
+        if (questionText.trim() == "") {
+            return "Please type a word or short question. It is used to search quotes.";
+        }
+
         return "";
     }
 
-    function getSearchWord() {
-        var text = $("#question").val().trim().toLowerCase();
-
-        if (text != "") {
-            var words = text.split(" ");
-            var word = words[0];
-
-            for (var i = 0; i < words.length; i++) {
-                if (words[i].length > 3) {
-                    word = words[i];
-                    break;
-                }
-            }
-
-            return word;
-        }
-
-        var theme = $("#quoteTheme").val();
-        if (theme != "") {
-            return theme;
-        }
-
-        return wordFromTopics();
+    function showFormError(message) {
+        hideBox($("#section-appointments"), true);
+        hideBox($("#section-signs"), true);
+        hideBox($("#section-pack"), true);
+        $("#answer").html("<p class='mb-0'>" + safeText(message) + "</p>");
+        showBox($("#answer"), false);
     }
 
-    function showQuote(quote, searchWord, exactMatch) {
+    function showQuote(quote, theme, questionWord, matchedOn) {
         var html = "";
-        var safeWord = safeText(searchWord);
 
         html = html + "<p>" + safeText(quote.content) + "</p>";
         html = html + "<p><i>— " + safeText(quote.author) + "</i></p>";
+        html = html + "<p><small>Form theme sent to quotes API: <b>" + safeText(theme) + "</b></small></p>";
+        html = html + "<p><small>Form word sent to quotes API: <b>" + safeText(questionWord) + "</b></small></p>";
 
-        if (exactMatch == true) {
-            html = html + "<p><small>Quote search word from your form: <b>" + safeWord + "</b></small></p>";
+        if (matchedOn == "theme") {
+            html = html + "<p><small>Matched your theme.</small></p>";
+        } else if (matchedOn == "question") {
+            html = html + "<p><small>No theme match, so matched your question word.</small></p>";
         } else {
-            html = html + "<p><small>No quote matched <b>" + safeWord + "</b>, so here is another calm message.</small></p>";
+            html = html + "<p><small>No exact match for theme or word, so here is another calm message.</small></p>";
         }
 
-        html = html + "<p class='mb-0'><small>Read this slowly while you breathe out.</small></p>";
+        html = html + "<p><small>Read this slowly while you breathe out.</small></p>";
 
         $("#quoteBoxBody").html(html);
         showBox($("#quoteBox"), false);
     }
 
     function loadQuoteFromForm() {
-        var searchWord = getSearchWord();
+        var theme = $("#quoteTheme").val().toLowerCase();
+        var questionWord = getQuestionWord();
 
-        if (searchWord == "") {
-            $("#quoteBoxBody").html("<p class='mb-0'>Please choose a quote theme or type a word in the form first.</p>");
-            showBox($("#quoteBox"), false);
-            return;
-        }
-
-        $("#quoteBoxBody").html("<p class='mb-0'>Loading a quote for: <b>" + safeText(searchWord) + "</b>...</p>");
+        $("#quoteBoxBody").html(
+            "<p>Loading a quote using your form theme <b>" + safeText(theme) +
+            "</b> and word <b>" + safeText(questionWord) + "</b>...</p>"
+        );
         showBox($("#quoteBox"), false);
 
-        $.getJSON("https://api.freeapi.app/api/v1/public/quotes?limit=50")
+        // Form values are used in the request (query) and to pick a matching quote
+        $.getJSON("https://api.freeapi.app/api/v1/public/quotes?limit=50&query=" + encodeURIComponent(theme))
             .done(function (result) {
                 var list = result.data.data;
-                var matches = [];
+                var themeMatches = [];
+                var questionMatches = [];
+                var i;
 
-                for (var i = 0; i < list.length; i++) {
-                    if (list[i].content.toLowerCase().indexOf(searchWord) !== -1) {
-                        matches.push(list[i]);
+                for (i = 0; i < list.length; i++) {
+                    var content = list[i].content.toLowerCase();
+
+                    if (content.indexOf(theme) !== -1) {
+                        themeMatches.push(list[i]);
+                    }
+                    if (content.indexOf(questionWord) !== -1) {
+                        questionMatches.push(list[i]);
                     }
                 }
 
                 var quote;
-                var exactMatch;
+                var matchedOn;
 
-                if (matches.length > 0) {
-                    quote = matches[Math.floor(Math.random() * matches.length)];
-                    exactMatch = true;
+                if (themeMatches.length > 0) {
+                    quote = themeMatches[Math.floor(Math.random() * themeMatches.length)];
+                    matchedOn = "theme";
+                } else if (questionMatches.length > 0) {
+                    quote = questionMatches[Math.floor(Math.random() * questionMatches.length)];
+                    matchedOn = "question";
                 } else {
                     quote = list[Math.floor(Math.random() * list.length)];
-                    exactMatch = false;
+                    matchedOn = "none";
                 }
 
-                showQuote(quote, searchWord, exactMatch);
+                showQuote(quote, theme, questionWord, matchedOn);
             })
             .fail(function () {
-                $("#quoteBoxBody").html("<p class='mb-0'>Sorry, the quote could not load. Please try again.</p>");
+                $("#quoteBoxBody").html("<p>Sorry, the quote could not load. Please try again.</p>");
                 showBox($("#quoteBox"), false);
             });
     }
 
     function loadDogFromApi() {
-        $("#dogBoxBody").html("<p class='mb-0'>Loading a soft picture...</p>");
+        var language = $("#language").val();
+        var topics = getChosenTopics();
+        var topicText = topics.join(", ");
+
+        $("#dogBoxBody").html(
+            "<p>Loading a soft picture for language <b>" + safeText(language) +
+            "</b> and topics: <b>" + safeText(topicText) + "</b>...</p>"
+        );
         showBox($("#dogBox"), false);
 
-        $.getJSON("https://api.freeapi.app/api/v1/public/dogs/dog/random")
+        // Language from the form is sent in the request URL as a simple label/seed
+        $.getJSON("https://api.freeapi.app/api/v1/public/dogs/dog/random?lang=" + encodeURIComponent(language))
             .done(function (result) {
                 var dog = result.data;
                 var imageUrl = dog.image.url;
@@ -180,12 +237,14 @@ $(document).ready(function () {
                     "<p>Look at this picture for a few slow breaths.</p>" +
                     "<p><img src='" + imageUrl + "' alt='A photo of a " + safeText(dogName) + "'></p>" +
                     "<p><b>" + safeText(dogName) + "</b></p>" +
-                    "<p class='mb-0'><small>" + safeText(temperament) + "</small></p>"
+                    "<p><small>" + safeText(temperament) + "</small></p>" +
+                    "<p><small>Chosen using your form language: <b>" + safeText(language) + "</b></small></p>" +
+                    "<p><small>Linked to your form topics: <b>" + safeText(topicText) + "</b></small></p>"
                 );
                 showBox($("#dogBox"), false);
             })
             .fail(function () {
-                $("#dogBoxBody").html("<p class='mb-0'>Sorry, the picture could not load. Please try again.</p>");
+                $("#dogBoxBody").html("<p>Sorry, the picture could not load. Please try again.</p>");
                 showBox($("#dogBox"), false);
             });
     }
@@ -199,68 +258,33 @@ $(document).ready(function () {
         $("#answer").empty();
         hideBox($("#answer"), false);
 
-        var who = $("input[name='who']:checked").val();
-        var language = $("#language").val();
-        var quoteTheme = $("#quoteTheme").val();
-        var wantAppointments = $("#appointments").is(":checked");
-        var wantSigns = $("#signs").is(":checked");
-        var wantPack = $("#pack").is(":checked");
-        var questionText = $("#question").val();
+        var error = getFormError();
 
-        if (who == undefined || who == "") {
-            hideBox($("#section-appointments"), true);
-            hideBox($("#section-signs"), true);
-            hideBox($("#section-pack"), true);
-            $("#answer").html("<p class='mb-0'>Please choose who this is for.</p>");
-            showBox($("#answer"), false);
-            return;
-        }
-
-        if (language == "") {
-            $("#answer").html("<p class='mb-0'>Please choose your preferred language.</p>");
-            showBox($("#answer"), false);
-            return;
-        }
-
-        if (wantAppointments == false && wantSigns == false && wantPack == false) {
-            hideBox($("#section-appointments"), true);
-            hideBox($("#section-signs"), true);
-            hideBox($("#section-pack"), true);
-            $("#answer").html("<p class='mb-0'>Please choose at least one topic to learn.</p>");
-            showBox($("#answer"), false);
-            return;
-        }
-
-        if (quoteTheme == "") {
-            $("#answer").html("<p class='mb-0'>Please choose a calm quote theme.</p>");
-            showBox($("#answer"), false);
-            return;
-        }
-
-        if (questionText.trim() == "") {
-            $("#answer").html("<p class='mb-0'>Please type a word or short question. It is used to search quotes.</p>");
-            showBox($("#answer"), false);
+        if (error != "") {
+            showFormError(error);
             return;
         }
 
         showHideSections();
 
-        var safeQuestion = safeText(questionText);
-        var safeLanguage = safeText(language);
-        var safeTheme = safeText(quoteTheme);
+        var language = $("#language").val();
+        var quoteTheme = $("#quoteTheme").val();
+        var questionText = $("#question").val();
+        var topics = getChosenTopics();
         var languageNote = "";
 
         if (language != "English") {
-            languageNote = "<p>You chose <b>" + safeLanguage + "</b>. You can ask for an interpreter at your midwife or GP appointment.</p>";
+            languageNote = "<p>You chose <b>" + safeText(language) + "</b>. You can ask for an interpreter at your midwife or GP appointment.</p>";
         } else {
-            languageNote = "<p>Preferred language: <b>" + safeLanguage + "</b>.</p>";
+            languageNote = "<p>Preferred language: <b>" + safeText(language) + "</b>.</p>";
         }
 
         $("#answer").html(
             languageNote +
-            "<p>Quote theme from your form: <b>" + safeTheme + "</b></p>" +
-            "<p>You asked: " + safeQuestion + "</p>" +
-            "<p class='mb-0'>Loading a FreeAPI quote and a soft dog picture below...</p>"
+            "<p>Topics from your form: <b>" + safeText(topics.join(", ")) + "</b></p>" +
+            "<p>Quote theme from your form: <b>" + safeText(quoteTheme) + "</b></p>" +
+            "<p>You asked: " + safeText(questionText) + "</p>" +
+            "<p>Loading FreeAPI results below using those form answers...</p>"
         );
         showBox($("#answer"), false);
 
@@ -296,6 +320,13 @@ $(document).ready(function () {
     });
 
     $("#quoteBtn").click(function () {
+        var error = getFormError();
+
+        if (error != "") {
+            showFormError(error);
+            return;
+        }
+
         loadApisFromForm();
     });
 
