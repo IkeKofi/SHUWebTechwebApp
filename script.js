@@ -17,10 +17,25 @@ $(document).ready(function () {
         if (useSlide == true) {
             $el.stop(true, true).slideUp(function () {
                 $el.attr("hidden", "hidden");
+                $el.css("display", "none");
             });
         } else {
             $el.stop(true, true).hide();
+            $el.css({
+                display: "none",
+                opacity: ""
+            });
             $el.attr("hidden", "hidden");
+        }
+    }
+
+    function closeMidwifePanel() {
+        hideBox($("#midwifeBox"), false);
+        $("#midwifeConfirm").empty();
+        hideBox($("#midwifeConfirm"), false);
+        $("#midwifeForm").show();
+        if ($("#midwifeForm")[0]) {
+            $("#midwifeForm")[0].reset();
         }
     }
 
@@ -338,8 +353,11 @@ $(document).ready(function () {
         showBox($("#midwifeBox"), false);
     });
 
-    $("#closeMidwifeBtn").click(function () {
-        hideBox($("#midwifeBox"), false);
+    $("#closeMidwifeBtn").on("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMidwifePanel();
+        return false;
     });
 
     $("#midwifeForm").submit(function () {
