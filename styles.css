@@ -138,7 +138,6 @@ fieldset.form-group legend {
     margin-left: 4px;
 }
 
-textarea[name="question"],
 select[name="language"],
 select[name="quoteTheme"] {
     display: block;
@@ -153,7 +152,6 @@ select[name="quoteTheme"] {
     color: #5c4a72;
 }
 
-textarea[name="question"]:focus,
 select[name="language"]:focus,
 select[name="quoteTheme"]:focus {
     border-color: #9b7eb8;
@@ -314,7 +312,6 @@ footer {
         gap: 24px;
     }
 
-    textarea[name="question"],
     select[name="language"],
     select[name="quoteTheme"] {
         max-width: 500px;

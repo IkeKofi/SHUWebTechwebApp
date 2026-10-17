@@ -66,26 +66,6 @@ $(document).ready(function () {
             .replace(/>/g, "&gt;");
     }
 
-    function getQuestionWord() {
-        var text = $("#question").val().trim().toLowerCase();
-
-        if (text == "") {
-            return "";
-        }
-
-        var words = text.split(" ");
-        var word = words[0];
-
-        for (var i = 0; i < words.length; i++) {
-            if (words[i].length > 3) {
-                word = words[i];
-                break;
-            }
-        }
-
-        return word;
-    }
-
     function getChosenTopics() {
         var topics = [];
 
@@ -107,7 +87,6 @@ $(document).ready(function () {
         var who = $("input[name='who']:checked").val();
         var language = $("#language").val();
         var quoteTheme = $("#quoteTheme").val();
-        var questionText = $("#question").val();
         var topics = getChosenTopics();
 
         if (who == undefined || who == "") {
@@ -126,10 +105,6 @@ $(document).ready(function () {
             return "Please choose a calm quote theme.";
         }
 
-        if (questionText.trim() == "") {
-            return "Please type a word or short question. It is used to search quotes.";
-        }
-
         return "";
     }
 
@@ -141,20 +116,17 @@ $(document).ready(function () {
         showBox($("#answer"), false);
     }
 
-    function showQuote(quote, theme, questionWord, matchedOn) {
+    function showQuote(quote, theme, matchedOn) {
         var html = "";
 
         html = html + "<p>" + safeText(quote.content) + "</p>";
         html = html + "<p><i>— " + safeText(quote.author) + "</i></p>";
         html = html + "<p><small>Form theme sent to quotes API: <b>" + safeText(theme) + "</b></small></p>";
-        html = html + "<p><small>Form word sent to quotes API: <b>" + safeText(questionWord) + "</b></small></p>";
 
-        if (matchedOn == "theme") {
+        if (matchedOn == true) {
             html = html + "<p><small>Matched your theme.</small></p>";
-        } else if (matchedOn == "question") {
-            html = html + "<p><small>No theme match, so matched your question word.</small></p>";
         } else {
-            html = html + "<p><small>No exact match for theme or word, so here is another calm message.</small></p>";
+            html = html + "<p><small>No exact match for that theme, so here is another calm message.</small></p>";
         }
 
         html = html + "<p><small>Read this slowly while you breathe out.</small></p>";
@@ -165,30 +137,22 @@ $(document).ready(function () {
 
     function loadQuoteFromForm() {
         var theme = $("#quoteTheme").val().toLowerCase();
-        var questionWord = getQuestionWord();
 
         $("#quoteBoxBody").html(
-            "<p>Loading a quote using your form theme <b>" + safeText(theme) +
-            "</b> and word <b>" + safeText(questionWord) + "</b>...</p>"
+            "<p>Loading a quote using your form theme <b>" + safeText(theme) + "</b>...</p>"
         );
         showBox($("#quoteBox"), false);
 
-        // Form values are used in the request (query) and to pick a matching quote
+        // Theme from the form is sent in the request and used to pick a matching quote
         $.getJSON("https://api.freeapi.app/api/v1/public/quotes?limit=50&query=" + encodeURIComponent(theme))
             .done(function (result) {
                 var list = result.data.data;
                 var themeMatches = [];
-                var questionMatches = [];
                 var i;
 
                 for (i = 0; i < list.length; i++) {
-                    var content = list[i].content.toLowerCase();
-
-                    if (content.indexOf(theme) !== -1) {
+                    if (list[i].content.toLowerCase().indexOf(theme) !== -1) {
                         themeMatches.push(list[i]);
-                    }
-                    if (content.indexOf(questionWord) !== -1) {
-                        questionMatches.push(list[i]);
                     }
                 }
 
@@ -197,16 +161,13 @@ $(document).ready(function () {
 
                 if (themeMatches.length > 0) {
                     quote = themeMatches[Math.floor(Math.random() * themeMatches.length)];
-                    matchedOn = "theme";
-                } else if (questionMatches.length > 0) {
-                    quote = questionMatches[Math.floor(Math.random() * questionMatches.length)];
-                    matchedOn = "question";
+                    matchedOn = true;
                 } else {
                     quote = list[Math.floor(Math.random() * list.length)];
-                    matchedOn = "none";
+                    matchedOn = false;
                 }
 
-                showQuote(quote, theme, questionWord, matchedOn);
+                showQuote(quote, theme, matchedOn);
             })
             .fail(function () {
                 $("#quoteBoxBody").html("<p>Sorry, the quote could not load. Please try again.</p>");
@@ -269,7 +230,6 @@ $(document).ready(function () {
 
         var language = $("#language").val();
         var quoteTheme = $("#quoteTheme").val();
-        var questionText = $("#question").val();
         var topics = getChosenTopics();
         var languageNote = "";
 
@@ -283,7 +243,6 @@ $(document).ready(function () {
             languageNote +
             "<p>Topics from your form: <b>" + safeText(topics.join(", ")) + "</b></p>" +
             "<p>Quote theme from your form: <b>" + safeText(quoteTheme) + "</b></p>" +
-            "<p>You asked: " + safeText(questionText) + "</p>" +
             "<p>Loading FreeAPI results below using those form answers...</p>"
         );
         showBox($("#answer"), false);
