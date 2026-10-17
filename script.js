@@ -292,6 +292,7 @@ $(document).ready(function () {
         hideBox($("#dogBox"), false);
         $("#greeting").html("");
         hideBox($("#greeting"), false);
+        hideBox($("#midwifeBox"), false);
     }
 
     $("input[name='who']").click(function () {
@@ -305,6 +306,10 @@ $(document).ready(function () {
 
     $("#clearBtn").click(function () {
         clearAll();
+    });
+
+    $("#bookMidwifeBtn").click(function () {
+        showBox($("#midwifeBox"), false);
     });
 
     $("#quoteBtn").click(function () {

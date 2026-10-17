@@ -170,8 +170,26 @@ input[type="checkbox"]:checked + label {
     font-weight: bold;
 }
 
+.form-actions {
+    margin-top: 8px;
+}
+
+.form-actions-left {
+    margin-bottom: 16px;
+}
+
+.form-actions-right {
+    text-align: left;
+}
+
+.midwife-question {
+    margin: 0 0 6px 0;
+    font-weight: bold;
+}
+
 .btn-main,
-.btn-clear {
+.btn-clear,
+.btn-midwife {
     display: inline-block;
     margin: 4px 8px 4px 0;
     padding: 8px 14px;
@@ -202,6 +220,18 @@ input[type="checkbox"]:checked + label {
 .btn-clear:hover,
 .btn-clear:focus {
     background-color: #f3e8ff;
+}
+
+.btn-midwife {
+    background-color: #c48bb0;
+    border: 1px solid #c48bb0;
+    color: #fff;
+}
+
+.btn-midwife:hover,
+.btn-midwife:focus {
+    background-color: #a14d6a;
+    border-color: #a14d6a;
 }
 
 .btn-soft {
@@ -267,7 +297,8 @@ input[type="checkbox"]:checked + label {
 #greeting,
 #answer,
 #quoteBox,
-#dogBox {
+#dogBox,
+#midwifeBox {
     display: none;
 }
 
@@ -330,6 +361,21 @@ footer {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 24px;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 16px;
+    }
+
+    .form-actions-left {
+        margin-bottom: 0;
+    }
+
+    .form-actions-right {
+        text-align: right;
     }
 
     select[name="language"],

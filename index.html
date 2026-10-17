@@ -110,9 +110,23 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="btn-main">Show me</button>
-                        <button type="button" id="clearBtn" class="btn-clear">Clear</button>
+                        <div class="form-actions">
+                            <div class="form-actions-left">
+                                <button type="submit" class="btn-main">Show me</button>
+                                <button type="button" id="clearBtn" class="btn-clear">Clear</button>
+                            </div>
+                            <div class="form-actions-right">
+                                <p class="midwife-question">Want to speak with a registered Midwife?</p>
+                                <button type="button" id="bookMidwifeBtn" class="btn-midwife">Book a call with a midwife</button>
+                            </div>
+                        </div>
                     </form>
+
+                    <div id="midwifeBox" class="info-box" aria-hidden="true" hidden>
+                        <p>You can ask your GP surgery to book you with a midwife, or call your local maternity unit.</p>
+                        <p>If you are already under midwife care, use the phone number in your notes.</p>
+                        <p>For emergencies, call <strong>999</strong>.</p>
+                    </div>
 
                     <div id="greeting" class="info-box" aria-hidden="true" hidden></div>
 
