@@ -325,6 +325,28 @@ input[type="checkbox"]:checked + label {
     font-size: 0.85rem;
 }
 
+.back-to-top-box {
+    text-align: center;
+    margin: 12px auto;
+    padding: 10px 14px;
+    max-width: 220px;
+    background-color: #f3e8ff;
+    border: 2px solid #9b7eb8;
+    border-radius: 4px;
+}
+
+.back-to-top-box a {
+    color: #9b7eb8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-to-top-box a:hover,
+.back-to-top-box a:focus {
+    color: #7f6499;
+    text-decoration: underline;
+}
+
 footer {
     margin-top: 16px;
     padding-top: 8px;
