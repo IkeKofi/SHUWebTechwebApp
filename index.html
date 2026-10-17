@@ -98,18 +98,6 @@
                             </div>
                         </fieldset>
 
-                        <div class="form-group">
-                            <label for="quoteTheme">Calm quote theme (sent to the quotes API) <span class="required">*</span></label>
-                            <select id="quoteTheme" name="quoteTheme" required>
-                                <option value="">Please choose</option>
-                                <option value="hope">Hope</option>
-                                <option value="love">Love</option>
-                                <option value="life">Life</option>
-                                <option value="peace">Peace</option>
-                                <option value="strength">Strength</option>
-                            </select>
-                        </div>
-
                         <div class="form-actions">
                             <div class="form-actions-left">
                                 <button type="submit" class="btn-main">Show me</button>
@@ -184,8 +172,16 @@
                 <section id="coping" class="block" aria-labelledby="coping-heading">
                     <h2 id="coping-heading">Coping with labour pain</h2>
 
-                    <div class="warn-box" role="status">
-                        <strong>Important:</strong> These are for education and support only! They do not replace medical advice! If you are worried, call your midwife or 999.
+                    <div class="form-group">
+                        <label for="quoteTheme">Calm quote theme (sent to the quotes API) <span class="required">*</span></label>
+                        <select id="quoteTheme" name="quoteTheme">
+                            <option value="">Please choose</option>
+                            <option value="hope">Hope</option>
+                            <option value="love">Love</option>
+                            <option value="life">Life</option>
+                            <option value="peace">Peace</option>
+                            <option value="strength">Strength</option>
+                        </select>
                     </div>
 
                     <ul>
@@ -199,7 +195,7 @@
                 <section id="quote" class="block" aria-labelledby="quote-heading">
                     <h2 id="quote-heading">A calm message for focus</h2>
 
-                    <p>Fill in the form above (theme, language and topics). Then press Show me, or press the button below. The page uses your form answers to call FreeAPI twice: once for a quote from your theme, and once for a soft dog picture.</p>
+                    <p>Choose a calm quote theme under Coping with labour pain, and fill in language and topics in the form. Then press the button below. The page uses your answers to call FreeAPI twice: once for a quote from your theme, and once for a soft dog picture.</p>
 
                     <button type="button" id="quoteBtn" class="btn-main">Show me a calm message</button>
                     <div id="quoteBox" class="topic-box" aria-hidden="true" hidden>
@@ -215,7 +211,9 @@
             </main>
 
             <footer>
-                <p class="note">This is only the first page. More will be added later.</p>
+                <div class="warn-box" role="status">
+                    <strong>Important:</strong> These are for education and support only! They do not replace medical advice! If you are worried, call your midwife or 999.
+                </div>
                 <p class="footer-text">Pregnancy Education and Birth Preparedness. Simple information for people new to the UK health system.</p>
                 <p class="footer-text"><a href="#main-content">Back to top</a></p>
             </footer>

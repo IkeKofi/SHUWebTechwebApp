@@ -97,11 +97,10 @@ $(document).ready(function () {
         return topics;
     }
 
-    // Shared checks for Show me and the calm-message button
+    // Checks for the main learning form (Show me)
     function getFormError() {
         var who = $("input[name='who']:checked").val();
         var language = $("#language").val();
-        var quoteTheme = $("#quoteTheme").val();
         var topics = getChosenTopics();
 
         if (who == undefined || who == "") {
@@ -116,11 +115,26 @@ $(document).ready(function () {
             return "Please choose at least one topic to learn.";
         }
 
-        if (quoteTheme == "") {
-            return "Please choose a calm quote theme.";
+        return "";
+    }
+
+    // Theme sits under Coping with labour pain and is needed for quotes/API
+    function getThemeError() {
+        if ($("#quoteTheme").val() == "") {
+            return "Please choose a calm quote theme under Coping with labour pain.";
         }
 
         return "";
+    }
+
+    function getCalmMessageError() {
+        var formError = getFormError();
+
+        if (formError != "") {
+            return formError;
+        }
+
+        return getThemeError();
     }
 
     function showFormError(message) {
@@ -285,17 +299,22 @@ $(document).ready(function () {
 
         $("#answer").html(
             languageNote +
-            "<p>Topics from your form: <b>" + safeText(topics.join(", ")) + "</b></p>" +
-            "<p>Quote theme from your form: <b>" + safeText(quoteTheme) + "</b></p>" +
-            "<p>Loading FreeAPI results below using those form answers...</p>"
+            "<p>Topics from your form: <b>" + safeText(topics.join(", ")) + "</b></p>"
         );
         showBox($("#answer"), false);
 
-        loadApisFromForm();
+        // Quotes need the theme under Coping; load calm APIs only if theme is chosen
+        if (quoteTheme != "") {
+            $("#answer").append("<p>Loading a calm quote and picture using your theme <b>" + safeText(quoteTheme) + "</b>...</p>");
+            loadApisFromForm();
+        } else {
+            $("#answer").append("<p>Choose a calm quote theme under Coping with labour pain if you also want a FreeAPI quote and picture.</p>");
+        }
     }
 
     function clearAll() {
         $("#needForm")[0].reset();
+        $("#quoteTheme").val("");
         hideBox($("#section-appointments"), true);
         hideBox($("#section-signs"), true);
         hideBox($("#section-pack"), true);
@@ -384,7 +403,7 @@ $(document).ready(function () {
     });
 
     $("#quoteBtn").click(function () {
-        var error = getFormError();
+        var error = getCalmMessageError();
 
         if (error != "") {
             showFormError(error);
@@ -395,7 +414,7 @@ $(document).ready(function () {
     });
 
     $("#newQuoteBtn").click(function () {
-        var error = getFormError();
+        var error = getCalmMessageError();
 
         if (error != "") {
             showFormError(error);
@@ -406,7 +425,7 @@ $(document).ready(function () {
     });
 
     $("#newDogBtn").click(function () {
-        var error = getFormError();
+        var error = getCalmMessageError();
 
         if (error != "") {
             showFormError(error);
