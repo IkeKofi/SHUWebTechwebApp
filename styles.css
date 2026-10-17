@@ -204,6 +204,25 @@ input[type="checkbox"]:checked + label {
     background-color: #f3e8ff;
 }
 
+.btn-soft {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 0.9em;
+    cursor: pointer;
+    background-color: #f7f2fa;
+    color: #5c4a72;
+    border: 1px solid #c9b3e6;
+}
+
+.btn-soft:hover,
+.btn-soft:focus {
+    background-color: #f3e8ff;
+    border-color: #9b7eb8;
+}
+
 .info-box,
 .result-box,
 .warn-box,

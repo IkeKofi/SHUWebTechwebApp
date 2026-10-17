@@ -289,4 +289,26 @@ $(document).ready(function () {
         loadApisFromForm();
     });
 
+    $("#newQuoteBtn").click(function () {
+        var error = getFormError();
+
+        if (error != "") {
+            showFormError(error);
+            return;
+        }
+
+        loadQuoteFromForm();
+    });
+
+    $("#newDogBtn").click(function () {
+        var error = getFormError();
+
+        if (error != "") {
+            showFormError(error);
+            return;
+        }
+
+        loadDogFromApi();
+    });
+
 });
