@@ -118,10 +118,10 @@ $(document).ready(function () {
         return "";
     }
 
-    // Theme sits under Coping with labour pain and is needed for quotes/API
+    // Theme sits under the calming quotes section and is needed for quotes/API
     function getThemeError() {
         if ($("#quoteTheme").val() == "") {
-            return "Please choose a calm quote theme under Coping with labour pain.";
+            return "Please choose a calm quote theme.";
         }
 
         return "";
@@ -286,7 +286,7 @@ $(document).ready(function () {
 
         showHideSections();
 
-        // Load calm quote and picture if a theme was chosen under Coping
+        // Load calm quote and picture if a theme was chosen
         if ($("#quoteTheme").val() != "") {
             loadApisFromForm();
         }
