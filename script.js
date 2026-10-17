@@ -118,7 +118,7 @@ $(document).ready(function () {
         return "";
     }
 
-    // Theme sits under the calming quotes section and is needed for quotes/API
+    // Theme controls quotes and dog pictures only (not the learning form)
     function getThemeError() {
         if ($("#quoteTheme").val() == "") {
             return "Please choose a calm quote theme.";
@@ -127,22 +127,18 @@ $(document).ready(function () {
         return "";
     }
 
-    function getCalmMessageError() {
-        var formError = getFormError();
-
-        if (formError != "") {
-            return formError;
-        }
-
-        return getThemeError();
-    }
-
     function showFormError(message) {
         hideBox($("#section-appointments"), true);
         hideBox($("#section-signs"), true);
         hideBox($("#section-pack"), true);
-        $("#answer").html("<p class='mb-0'>" + safeText(message) + "</p>");
+        $("#answer").html("<p>" + safeText(message) + "</p>");
         showBox($("#answer"), false);
+    }
+
+    function showCalmError(message) {
+        $("#quoteBoxBody").html("<p>" + safeText(message) + "</p>");
+        showBox($("#quoteBox"), false);
+        hideBox($("#dogBox"), false);
     }
 
     var lastQuoteText = "";
@@ -218,20 +214,17 @@ $(document).ready(function () {
     }
 
     function loadDogFromApi() {
-        var language = $("#language").val();
-        var topics = getChosenTopics();
-        var topicText = topics.join(", ");
+        var theme = $("#quoteTheme").val().toLowerCase();
         var refreshId = new Date().getTime();
 
         $("#dogBoxBody").html(
-            "<p>Loading a soft picture for language <b>" + safeText(language) +
-            "</b> and topics: <b>" + safeText(topicText) + "</b>...</p>"
+            "<p>Loading a soft picture for theme <b>" + safeText(theme) + "</b>...</p>"
         );
         showBox($("#dogBox"), false);
 
-        // Language from the form is sent in the request. refreshId asks for a new reply each click.
+        // Theme from the calm section is sent in the request. refreshId asks for a new reply each click.
         $.ajax({
-            url: "https://api.freeapi.app/api/v1/public/dogs/dog/random?lang=" + encodeURIComponent(language) + "&_=" + refreshId,
+            url: "https://api.freeapi.app/api/v1/public/dogs/dog/random?theme=" + encodeURIComponent(theme) + "&_=" + refreshId,
             method: "GET",
             dataType: "json",
             cache: false
@@ -256,9 +249,7 @@ $(document).ready(function () {
                     "<p>Look at this picture for a few slow breaths.</p>" +
                     "<p><img src='" + imageUrl + "?_=" + refreshId + "' alt='A photo of a " + safeText(dogName) + "'></p>" +
                     "<p><b>" + safeText(dogName) + "</b></p>" +
-                    "<p><small>" + safeText(temperament) + "</small></p>" +
-                    "<p><small>Chosen using your form language: <b>" + safeText(language) + "</b></small></p>" +
-                    "<p><small>Linked to your form topics: <b>" + safeText(topicText) + "</b></small></p>"
+                    "<p><small>" + safeText(temperament) + "</small></p>"
                 );
                 showBox($("#dogBox"), false);
             })
@@ -268,7 +259,7 @@ $(document).ready(function () {
             });
     }
 
-    function loadApisFromForm() {
+    function loadCalmApis() {
         loadQuoteFromForm();
         loadDogFromApi();
     }
@@ -284,26 +275,17 @@ $(document).ready(function () {
             return;
         }
 
+        // Form only shows the learning topic answers
         showHideSections();
-
-        // Load calm quote and picture if a theme was chosen
-        if ($("#quoteTheme").val() != "") {
-            loadApisFromForm();
-        }
     }
 
     function clearAll() {
         $("#needForm")[0].reset();
-        $("#quoteTheme").val("");
         hideBox($("#section-appointments"), true);
         hideBox($("#section-signs"), true);
         hideBox($("#section-pack"), true);
         $("#answer").empty();
         hideBox($("#answer"), false);
-        $("#quoteBoxBody").empty();
-        hideBox($("#quoteBox"), false);
-        $("#dogBoxBody").empty();
-        hideBox($("#dogBox"), false);
         $("#greeting").html("");
         hideBox($("#greeting"), false);
         hideBox($("#midwifeBox"), false);
@@ -383,21 +365,21 @@ $(document).ready(function () {
     });
 
     $("#quoteBtn").click(function () {
-        var error = getCalmMessageError();
+        var error = getThemeError();
 
         if (error != "") {
-            showFormError(error);
+            showCalmError(error);
             return;
         }
 
-        loadApisFromForm();
+        loadCalmApis();
     });
 
     $("#newQuoteBtn").click(function () {
-        var error = getCalmMessageError();
+        var error = getThemeError();
 
         if (error != "") {
-            showFormError(error);
+            showCalmError(error);
             return;
         }
 
@@ -405,10 +387,10 @@ $(document).ready(function () {
     });
 
     $("#newDogBtn").click(function () {
-        var error = getCalmMessageError();
+        var error = getThemeError();
 
         if (error != "") {
-            showFormError(error);
+            showCalmError(error);
             return;
         }
 
