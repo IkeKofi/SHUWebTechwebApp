@@ -116,6 +116,24 @@ $(document).ready(function () {
         showBox($("#answer"), false);
     }
 
+    var lastQuoteText = "";
+    var lastDogUrl = "";
+    var dogRetryCount = 0;
+
+    function pickDifferentQuote(list) {
+        var quote = list[Math.floor(Math.random() * list.length)];
+        var tries = 0;
+
+        // Try a few times so New message is less likely to repeat the same quote
+        while (list.length > 1 && quote.content == lastQuoteText && tries < 8) {
+            quote = list[Math.floor(Math.random() * list.length)];
+            tries = tries + 1;
+        }
+
+        lastQuoteText = quote.content;
+        return quote;
+    }
+
     function showQuote(quote, theme, matchedOn) {
         var html = "";
 
@@ -137,14 +155,20 @@ $(document).ready(function () {
 
     function loadQuoteFromForm() {
         var theme = $("#quoteTheme").val().toLowerCase();
+        var refreshId = new Date().getTime();
 
         $("#quoteBoxBody").html(
             "<p>Loading a quote using your form theme <b>" + safeText(theme) + "</b>...</p>"
         );
         showBox($("#quoteBox"), false);
 
-        // Theme from the form is sent in the request and used to pick a matching quote
-        $.getJSON("https://api.freeapi.app/api/v1/public/quotes?limit=50&query=" + encodeURIComponent(theme))
+        // Theme from the form is sent in the request. refreshId stops the browser caching the same reply.
+        $.ajax({
+            url: "https://api.freeapi.app/api/v1/public/quotes?limit=50&query=" + encodeURIComponent(theme) + "&_=" + refreshId,
+            method: "GET",
+            dataType: "json",
+            cache: false
+        })
             .done(function (result) {
                 var list = result.data.data;
                 var themeMatches = [];
@@ -160,10 +184,10 @@ $(document).ready(function () {
                 var matchedOn;
 
                 if (themeMatches.length > 0) {
-                    quote = themeMatches[Math.floor(Math.random() * themeMatches.length)];
+                    quote = pickDifferentQuote(themeMatches);
                     matchedOn = true;
                 } else {
-                    quote = list[Math.floor(Math.random() * list.length)];
+                    quote = pickDifferentQuote(list);
                     matchedOn = false;
                 }
 
@@ -179,6 +203,7 @@ $(document).ready(function () {
         var language = $("#language").val();
         var topics = getChosenTopics();
         var topicText = topics.join(", ");
+        var refreshId = new Date().getTime();
 
         $("#dogBoxBody").html(
             "<p>Loading a soft picture for language <b>" + safeText(language) +
@@ -186,17 +211,32 @@ $(document).ready(function () {
         );
         showBox($("#dogBox"), false);
 
-        // Language from the form is sent in the request URL as a simple label/seed
-        $.getJSON("https://api.freeapi.app/api/v1/public/dogs/dog/random?lang=" + encodeURIComponent(language))
+        // Language from the form is sent in the request. refreshId asks for a new reply each click.
+        $.ajax({
+            url: "https://api.freeapi.app/api/v1/public/dogs/dog/random?lang=" + encodeURIComponent(language) + "&_=" + refreshId,
+            method: "GET",
+            dataType: "json",
+            cache: false
+        })
             .done(function (result) {
                 var dog = result.data;
                 var imageUrl = dog.image.url;
                 var dogName = dog.name;
                 var temperament = dog.temperament;
 
+                // If the API sent the same picture again, ask once more (max 3 tries)
+                if (imageUrl == lastDogUrl && dogRetryCount < 3) {
+                    dogRetryCount = dogRetryCount + 1;
+                    loadDogFromApi();
+                    return;
+                }
+
+                dogRetryCount = 0;
+                lastDogUrl = imageUrl;
+
                 $("#dogBoxBody").html(
                     "<p>Look at this picture for a few slow breaths.</p>" +
-                    "<p><img src='" + imageUrl + "' alt='A photo of a " + safeText(dogName) + "'></p>" +
+                    "<p><img src='" + imageUrl + "?_=" + refreshId + "' alt='A photo of a " + safeText(dogName) + "'></p>" +
                     "<p><b>" + safeText(dogName) + "</b></p>" +
                     "<p><small>" + safeText(temperament) + "</small></p>" +
                     "<p><small>Chosen using your form language: <b>" + safeText(language) + "</b></small></p>" +
