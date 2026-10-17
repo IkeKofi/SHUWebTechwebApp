@@ -293,6 +293,28 @@ $(document).ready(function () {
         $("#greeting").html("");
         hideBox($("#greeting"), false);
         hideBox($("#midwifeBox"), false);
+        $("#midwifeConfirm").empty();
+        hideBox($("#midwifeConfirm"), false);
+        $("#midwifeForm").show();
+        if ($("#midwifeForm")[0]) {
+            $("#midwifeForm")[0].reset();
+        }
+    }
+
+    function setMidwifeDateMin() {
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth() + 1;
+        var day = today.getDate();
+
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+
+        $("#midwifeDate").attr("min", year + "-" + month + "-" + day);
     }
 
     $("input[name='who']").click(function () {
@@ -309,7 +331,38 @@ $(document).ready(function () {
     });
 
     $("#bookMidwifeBtn").click(function () {
+        setMidwifeDateMin();
+        $("#midwifeForm").show();
+        $("#midwifeConfirm").empty();
+        hideBox($("#midwifeConfirm"), false);
         showBox($("#midwifeBox"), false);
+    });
+
+    $("#closeMidwifeBtn").click(function () {
+        hideBox($("#midwifeBox"), false);
+    });
+
+    $("#midwifeForm").submit(function () {
+        var name = $("#midwifeName").val().trim();
+        var date = $("#midwifeDate").val();
+        var time = $("#midwifeTime").val();
+
+        if (name == "" || date == "" || time == "") {
+            $("#midwifeConfirm").html("<p>Please fill in your name, date and time.</p>");
+            showBox($("#midwifeConfirm"), false);
+            return false;
+        }
+
+        $("#midwifeForm").hide();
+        $("#midwifeConfirm").html(
+            "<p><b>Booking requested</b></p>" +
+            "<p>Name: " + safeText(name) + "</p>" +
+            "<p>Date: " + safeText(date) + "</p>" +
+            "<p>Time: " + safeText(time) + "</p>" +
+            "<p>In real life you would also call your GP or maternity unit to confirm.</p>"
+        );
+        showBox($("#midwifeConfirm"), false);
+        return false;
     });
 
     $("#quoteBtn").click(function () {

@@ -140,7 +140,10 @@ fieldset.form-group legend {
 }
 
 select[name="language"],
-select[name="quoteTheme"] {
+select[name="quoteTheme"],
+select[name="midwifeTime"],
+input[name="midwifeName"],
+input[name="midwifeDate"] {
     display: block;
     width: 100%;
     max-width: 100%;
@@ -154,7 +157,10 @@ select[name="quoteTheme"] {
 }
 
 select[name="language"]:focus,
-select[name="quoteTheme"]:focus {
+select[name="quoteTheme"]:focus,
+select[name="midwifeTime"]:focus,
+input[name="midwifeName"]:focus,
+input[name="midwifeDate"]:focus {
     border-color: #9b7eb8;
     outline: 2px solid #c9b3e6;
 }
@@ -298,7 +304,8 @@ input[type="checkbox"]:checked + label {
 #answer,
 #quoteBox,
 #dogBox,
-#midwifeBox {
+#midwifeBox,
+#midwifeConfirm {
     display: none;
 }
 
@@ -379,7 +386,10 @@ footer {
     }
 
     select[name="language"],
-    select[name="quoteTheme"] {
+    select[name="quoteTheme"],
+    select[name="midwifeTime"],
+    input[name="midwifeName"],
+    input[name="midwifeDate"] {
         max-width: 500px;
     }
 }
