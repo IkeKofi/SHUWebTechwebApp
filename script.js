@@ -134,20 +134,12 @@ $(document).ready(function () {
         return quote;
     }
 
-    function showQuote(quote, theme, matchedOn) {
+    function showQuote(quote) {
         var html = "";
 
+        html = html + "<p><small>Read this slowly while you breathe out.</small></p>";
         html = html + "<p>" + safeText(quote.content) + "</p>";
         html = html + "<p><i>— " + safeText(quote.author) + "</i></p>";
-        html = html + "<p><small>Form theme sent to quotes API: <b>" + safeText(theme) + "</b></small></p>";
-
-        if (matchedOn == true) {
-            html = html + "<p><small>Matched your theme.</small></p>";
-        } else {
-            html = html + "<p><small>No exact match for that theme, so here is another calm message.</small></p>";
-        }
-
-        html = html + "<p><small>Read this slowly while you breathe out.</small></p>";
 
         $("#quoteBoxBody").html(html);
         showBox($("#quoteBox"), false);
@@ -181,17 +173,14 @@ $(document).ready(function () {
                 }
 
                 var quote;
-                var matchedOn;
 
                 if (themeMatches.length > 0) {
                     quote = pickDifferentQuote(themeMatches);
-                    matchedOn = true;
                 } else {
                     quote = pickDifferentQuote(list);
-                    matchedOn = false;
                 }
 
-                showQuote(quote, theme, matchedOn);
+                showQuote(quote);
             })
             .fail(function () {
                 $("#quoteBoxBody").html("<p>Sorry, the quote could not load. Please try again.</p>");
