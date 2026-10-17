@@ -118,10 +118,10 @@ $(document).ready(function () {
         return "";
     }
 
-    // Theme controls quotes and dog pictures only (not the learning form)
+    // Calming focus controls quotes and dog pictures only (not the learning form)
     function getThemeError() {
         if ($("#quoteTheme").val() == "") {
-            return "Please choose a calm quote theme.";
+            return "Please choose a calming focus.";
         }
 
         return "";
@@ -144,71 +144,73 @@ $(document).ready(function () {
     var lastQuoteText = "";
     var lastDogUrl = "";
     var dogRetryCount = 0;
+    var quoteRetryCount = 0;
 
-    function pickDifferentQuote(list) {
-        var quote = list[Math.floor(Math.random() * list.length)];
-        var tries = 0;
-
-        // Try a few times so New message is less likely to repeat the same quote
-        while (list.length > 1 && quote.content == lastQuoteText && tries < 8) {
-            quote = list[Math.floor(Math.random() * list.length)];
-            tries = tries + 1;
-        }
-
-        lastQuoteText = quote.content;
-        return quote;
-    }
-
-    function showQuote(quote) {
+    function showQuote(text, author) {
         var html = "";
 
         html = html + "<p><small>Read this slowly while you breathe out.</small></p>";
-        html = html + "<p>" + safeText(quote.content) + "</p>";
-        html = html + "<p><i>— " + safeText(quote.author) + "</i></p>";
+        html = html + "<p>" + safeText(text) + "</p>";
+
+        if (author != "") {
+            html = html + "<p><i>— " + safeText(author) + "</i></p>";
+        }
 
         $("#quoteBoxBody").html(html);
         showBox($("#quoteBox"), false);
     }
 
+    // Free coping-style quotes (mindfulness / peace / resilience).
+    // Quoteverse healing/mindfulness was the goal, but its public host is not
+    // reliably online, so this uses Loving Universe which has those themes.
+    function getCopingQuoteUrl(focus, refreshId) {
+        if (focus == "peace" || focus == "resilience") {
+            return "https://api.loving-universe.com/random?tag=" + encodeURIComponent(focus) + "&_=" + refreshId;
+        }
+
+        // healing and mindfulness both use the mindfulness category
+        return "https://api.loving-universe.com/random?category=mindfulness&_=" + refreshId;
+    }
+
     function loadQuoteFromForm() {
-        var theme = $("#quoteTheme").val().toLowerCase();
+        var focus = $("#quoteTheme").val().toLowerCase();
         var refreshId = new Date().getTime();
 
         $("#quoteBoxBody").html(
-            "<p>Loading a quote using your form theme <b>" + safeText(theme) + "</b>...</p>"
+            "<p>Loading a calming message for <b>" + safeText(focus) + "</b>...</p>"
         );
         showBox($("#quoteBox"), false);
 
-        // Theme from the form is sent in the request. refreshId stops the browser caching the same reply.
         $.ajax({
-            url: "https://api.freeapi.app/api/v1/public/quotes?limit=50&query=" + encodeURIComponent(theme) + "&_=" + refreshId,
+            url: getCopingQuoteUrl(focus, refreshId),
             method: "GET",
             dataType: "json",
-            cache: false
+            cache: false,
+            headers: {
+                Accept: "application/json"
+            }
         })
             .done(function (result) {
-                var list = result.data.data;
-                var themeMatches = [];
-                var i;
+                var text = result.text;
+                var author = "";
 
-                for (i = 0; i < list.length; i++) {
-                    if (list[i].content.toLowerCase().indexOf(theme) !== -1) {
-                        themeMatches.push(list[i]);
-                    }
+                if (result.author && result.author.name) {
+                    author = result.author.name;
                 }
 
-                var quote;
-
-                if (themeMatches.length > 0) {
-                    quote = pickDifferentQuote(themeMatches);
-                } else {
-                    quote = pickDifferentQuote(list);
+                // Try once more if we got the same message again
+                if (text == lastQuoteText && quoteRetryCount < 3) {
+                    quoteRetryCount = quoteRetryCount + 1;
+                    loadQuoteFromForm();
+                    return;
                 }
 
-                showQuote(quote);
+                quoteRetryCount = 0;
+                lastQuoteText = text;
+                showQuote(text, author);
             })
             .fail(function () {
-                $("#quoteBoxBody").html("<p>Sorry, the quote could not load. Please try again.</p>");
+                $("#quoteBoxBody").html("<p>Sorry, the calming message could not load. Please try again.</p>");
                 showBox($("#quoteBox"), false);
             });
     }
@@ -218,7 +220,7 @@ $(document).ready(function () {
         var refreshId = new Date().getTime();
 
         $("#dogBoxBody").html(
-            "<p>Loading a soft picture for theme <b>" + safeText(theme) + "</b>...</p>"
+            "<p>Loading a soft picture for <b>" + safeText(theme) + "</b>...</p>"
         );
         showBox($("#dogBox"), false);
 
