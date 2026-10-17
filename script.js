@@ -286,29 +286,9 @@ $(document).ready(function () {
 
         showHideSections();
 
-        var language = $("#language").val();
-        var quoteTheme = $("#quoteTheme").val();
-        var topics = getChosenTopics();
-        var languageNote = "";
-
-        if (language != "English") {
-            languageNote = "<p>You chose <b>" + safeText(language) + "</b>. You can ask for an interpreter at your midwife or GP appointment.</p>";
-        } else {
-            languageNote = "<p>Preferred language: <b>" + safeText(language) + "</b>.</p>";
-        }
-
-        $("#answer").html(
-            languageNote +
-            "<p>Topics from your form: <b>" + safeText(topics.join(", ")) + "</b></p>"
-        );
-        showBox($("#answer"), false);
-
-        // Quotes need the theme under Coping; load calm APIs only if theme is chosen
-        if (quoteTheme != "") {
-            $("#answer").append("<p>Loading a calm quote and picture using your theme <b>" + safeText(quoteTheme) + "</b>...</p>");
+        // Load calm quote and picture if a theme was chosen under Coping
+        if ($("#quoteTheme").val() != "") {
             loadApisFromForm();
-        } else {
-            $("#answer").append("<p>Choose a calm quote theme under Coping with labour pain if you also want a FreeAPI quote and picture.</p>");
         }
     }
 
