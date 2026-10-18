@@ -53,6 +53,15 @@ header {
     display: block;
 }
 
+.about-more {
+    display: none;
+}
+
+#aboutReadMore {
+    margin-top: 4px;
+    margin-bottom: 8px;
+}
+
 .urgent-label {
     color: #a14d6a;
     margin-bottom: 4px;
@@ -305,7 +314,8 @@ input[type="checkbox"]:checked + label {
 #quoteBox,
 #dogBox,
 #midwifeBox,
-#midwifeConfirm {
+#midwifeConfirm,
+#about-more {
     display: none;
 }
 

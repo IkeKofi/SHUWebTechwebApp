@@ -315,6 +315,16 @@ $(document).ready(function () {
         $("#midwifeDate").attr("min", year + "-" + month + "-" + day);
     }
 
+    $("#aboutReadMore").click(function () {
+        if ($("#about-more").attr("hidden")) {
+            showBox($("#about-more"), false);
+            $("#aboutReadMore").text("Read less");
+        } else {
+            hideBox($("#about-more"), false);
+            $("#aboutReadMore").text("Read more");
+        }
+    });
+
     $("input[name='who']").click(function () {
         updateGreeting();
     });
