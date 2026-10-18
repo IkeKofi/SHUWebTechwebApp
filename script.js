@@ -103,12 +103,12 @@ $(document).ready(function () {
         var language = $("#language").val();
         var topics = getChosenTopics();
 
-        if (who == undefined || who == "") {
-            return "Please choose who this is for.";
-        }
-
         if (language == "") {
             return "Please choose your preferred language.";
+        }
+
+        if (who == undefined || who == "") {
+            return "Please choose who this is for.";
         }
 
         if (topics.length == 0) {
