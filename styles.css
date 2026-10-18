@@ -53,13 +53,19 @@ header {
     display: block;
 }
 
-.about-more {
+.about-more,
+.learn-more {
     display: none;
 }
 
-#aboutReadMore {
+#aboutReadMore,
+#learnReadMore {
     margin-top: 4px;
     margin-bottom: 8px;
+}
+
+#learn-more {
+    margin-top: 0;
 }
 
 .urgent-label {
@@ -315,7 +321,8 @@ input[type="checkbox"]:checked + label {
 #dogBox,
 #midwifeBox,
 #midwifeConfirm,
-#about-more {
+#about-more,
+#learn-more {
     display: none;
 }
 

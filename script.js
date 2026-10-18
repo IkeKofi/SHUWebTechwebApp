@@ -325,6 +325,16 @@ $(document).ready(function () {
         }
     });
 
+    $("#learnReadMore").click(function () {
+        if ($("#learn-more").attr("hidden")) {
+            showBox($("#learn-more"), false);
+            $("#learnReadMore").text("Read less");
+        } else {
+            hideBox($("#learn-more"), false);
+            $("#learnReadMore").text("Read more");
+        }
+    });
+
     $("input[name='who']").click(function () {
         updateGreeting();
     });
