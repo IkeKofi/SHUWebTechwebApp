@@ -376,7 +376,7 @@ $(document).ready(function () {
 
         $("#midwifeForm").hide();
         $("#midwifeConfirm").html(
-            "<p><b>Booking requested:</b></p>" +
+            "<p><b>Booking requested for:</b></p>" +
             "<p>Name: " + safeText(name) + "</p>" +
             "<p>Date: " + safeText(date) + "</p>" +
             "<p>Time: " + safeText(time) + "</p>"
