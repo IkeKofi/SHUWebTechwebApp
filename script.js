@@ -423,18 +423,11 @@ $(document).ready(function () {
 
 /*
 References
-Chaicode. (n.d.).FreeAPI docs: Public APIs.https://api.freeapi.app/#/%F0%9F%93%A2%20Public%20APIs
-
-Loving Universe. (n.d.).Keyless quotes API & MCP server.https://www.loving-universe.com/developers
-
-Refsnes Data. (n.d.).The HTML DOM. W3Schools.https://www.w3schools.com/js/js_htmldom.asp
-
-Refsnes Data. (n.d.).JavaScript classes. W3Schools.https://www.w3schools.com/js/js_classes.asp
-
-Refsnes Data. (n.d.).Web APIs - Introduction. W3Schools.https://www.w3schools.com/js/js_api_intro.asp
-
-WebTutor. (2023, June 25).Mastering JavaScript: A beginner’s guide to programming magic.https://webtutor.dev/blogs/js/mastering-in-javascript-for-beginner
-
-WebTutor. (2023, June 25).Step up your coding game with jQuery: The essential guide for new developers.
-https://webtutor.dev/blogs/jquery/essential-jquery-guide-for-new-developers
+Chaicode. (n.d.). FreeAPI docs: Public APIs. https://api.freeapi.app/#/%F0%9F%93%A2%20Public%20APIs
+Loving Universe. (n.d.). Keyless quotes API & MCP server. https://www.loving-universe.com/developers
+Refsnes Data. (n.d.). The HTML DOM. W3Schools. https://www.w3schools.com/js/js_htmldom.asp
+Refsnes Data. (n.d.). JavaScript classes. W3Schools. https://www.w3schools.com/js/js_classes.asp
+Refsnes Data. (n.d.). Web APIs - Introduction. W3Schools. https://www.w3schools.com/js/js_api_intro.asp
+WebTutor. (2023, June 25). Mastering JavaScript: A beginner's guide to programming magic. https://webtutor.dev/blogs/js/mastering-in-javascript-for-beginner
+WebTutor. (2023, June 25). Step up your coding game with jQuery: The essential guide for new developers. https://webtutor.dev/blogs/jquery/essential-jquery-guide-for-new-developers
 */
