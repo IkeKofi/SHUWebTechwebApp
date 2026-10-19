@@ -33,7 +33,6 @@ $(document).ready(function () {
         hideBox($("#midwifeBox"), false);
         $("#midwifeConfirm").empty();
         hideBox($("#midwifeConfirm"), false);
-        $("#midwifeHelp").show();
         $("#midwifeForm").show();
         if ($("#midwifeForm")[0]) {
             $("#midwifeForm")[0].reset();
@@ -294,7 +293,6 @@ $(document).ready(function () {
         hideBox($("#midwifeBox"), false);
         $("#midwifeConfirm").empty();
         hideBox($("#midwifeConfirm"), false);
-        $("#midwifeHelp").show();
         $("#midwifeForm").show();
         if ($("#midwifeForm")[0]) {
             $("#midwifeForm")[0].reset();
@@ -352,7 +350,6 @@ $(document).ready(function () {
 
     $("#bookMidwifeBtn").click(function () {
         setMidwifeDateMin();
-        $("#midwifeHelp").show();
         $("#midwifeForm").show();
         $("#midwifeConfirm").empty();
         hideBox($("#midwifeConfirm"), false);
@@ -378,7 +375,6 @@ $(document).ready(function () {
         }
 
         $("#midwifeForm").hide();
-        $("#midwifeHelp").hide();
         $("#midwifeConfirm").html(
             "<p><b>Booking requested:</b></p>" +
             "<p>Name: " + safeText(name) + "</p>" +
