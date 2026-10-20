@@ -1,5 +1,7 @@
+// Wait until the page has finished loading before running any code
 $(document).ready(function () {
 
+    // Show a hidden box with a short fade
     function showBox($el, useSlide) {
         $el.removeAttr("hidden");
         $el.attr("aria-hidden", "false");
@@ -11,6 +13,7 @@ $(document).ready(function () {
         }
     }
 
+    // Hide a box and mark it as hidden for screen readers
     function hideBox($el, useSlide) {
         $el.attr("aria-hidden", "true");
 
@@ -29,6 +32,7 @@ $(document).ready(function () {
         }
     }
 
+    // Close the midwife booking panel and clear the form
     function closeMidwifePanel() {
         hideBox($("#midwifeBox"), false);
         $("#midwifeConfirm").empty();
@@ -39,6 +43,7 @@ $(document).ready(function () {
         }
     }
 
+    // Change the greeting text based on who the form is for
     function updateGreeting() {
         var who = $("input[name='who']:checked").val();
 
@@ -54,6 +59,7 @@ $(document).ready(function () {
         }
     }
 
+    // Show or hide each learning topic section from the checkboxes
     function showHideSections() {
         if ($("#appointments").is(":checked")) {
             showBox($("#section-appointments"), true);
@@ -74,6 +80,7 @@ $(document).ready(function () {
         }
     }
 
+    // Make text safe before putting it into the page
     function safeText(text) {
         return String(text)
             .replace(/&/g, "&amp;")
@@ -81,6 +88,7 @@ $(document).ready(function () {
             .replace(/>/g, "&gt;");
     }
 
+    // Build a list of the learning topics the user has ticked
     function getChosenTopics() {
         var topics = [];
 
@@ -97,7 +105,7 @@ $(document).ready(function () {
         return topics;
     }
 
-    // Checks for the main learning form (Show me)
+    // Check the main learning form has language, who, and at least one topic
     function getFormError() {
         var who = $("input[name='who']:checked").val();
         var language = $("#language").val();
@@ -118,7 +126,7 @@ $(document).ready(function () {
         return "";
     }
 
-    // Calming focus controls quotes and dog pictures only (not the learning form)
+    // Check that a calming focus has been chosen before using the APIs
     function getThemeError() {
         if ($("#quoteTheme").val() == "") {
             return "Please choose a calming focus.";
@@ -127,6 +135,7 @@ $(document).ready(function () {
         return "";
     }
 
+    // Show a form error message in the answer box
     function showFormError(message) {
         hideBox($("#section-appointments"), true);
         hideBox($("#section-signs"), true);
@@ -135,17 +144,20 @@ $(document).ready(function () {
         showBox($("#answer"), false);
     }
 
+    // Show a calming-section error and hide the dog picture box
     function showCalmError(message) {
         $("#quoteBoxBody").html("<p>" + safeText(message) + "</p>");
         showBox($("#quoteBox"), false);
         hideBox($("#dogBox"), false);
     }
 
+    // Remember the last quote and dog
     var lastQuoteText = "";
     var lastDogUrl = "";
     var dogRetryCount = 0;
     var quoteRetryCount = 0;
 
+    // Put the quote text and author into the quote box
     function showQuote(text, author) {
         var html = "";
 
@@ -160,18 +172,16 @@ $(document).ready(function () {
         showBox($("#quoteBox"), false);
     }
 
-    // Free coping-style quotes (mindfulness / peace / resilience).
-    // Quoteverse healing/mindfulness was the goal, but its public host is not
-    // reliably online, so this uses Loving Universe which has those themes.
+    // Build the Loving Universe API web address for the chosen calm focus
     function getCopingQuoteUrl(focus, refreshId) {
         if (focus == "peace" || focus == "resilience") {
             return "https://api.loving-universe.com/random?tag=" + encodeURIComponent(focus) + "&_=" + refreshId;
         }
 
-        // healing and mindfulness both use the mindfulness category
         return "https://api.loving-universe.com/random?category=mindfulness&_=" + refreshId;
     }
 
+    // Load a calming quote from the Loving Universe API
     function loadQuoteFromForm() {
         var focus = $("#quoteTheme").val().toLowerCase();
         var refreshId = new Date().getTime();
@@ -198,7 +208,7 @@ $(document).ready(function () {
                     author = result.author.name;
                 }
 
-                // Try once more if we got the same message again
+                // Try again if we got the same quote as last time
                 if (text == lastQuoteText && quoteRetryCount < 3) {
                     quoteRetryCount = quoteRetryCount + 1;
                     loadQuoteFromForm();
@@ -215,6 +225,7 @@ $(document).ready(function () {
             });
     }
 
+    // Load a random dog picture from the FreeAPI dogs endpoint
     function loadDogFromApi() {
         var theme = $("#quoteTheme").val().toLowerCase();
         var refreshId = new Date().getTime();
@@ -224,7 +235,6 @@ $(document).ready(function () {
         );
         showBox($("#dogBox"), false);
 
-        // Theme from the calm section is sent in the request. refreshId asks for a new reply each click.
         $.ajax({
             url: "https://api.freeapi.app/api/v1/public/dogs/dog/random?theme=" + encodeURIComponent(theme) + "&_=" + refreshId,
             method: "GET",
@@ -237,7 +247,7 @@ $(document).ready(function () {
                 var dogName = dog.name;
                 var temperament = dog.temperament;
 
-                // If the API sent the same picture again, ask once more (max 3 tries)
+                // Try again if we got the same picture as last time
                 if (imageUrl == lastDogUrl && dogRetryCount < 3) {
                     dogRetryCount = dogRetryCount + 1;
                     loadDogFromApi();
@@ -261,11 +271,13 @@ $(document).ready(function () {
             });
     }
 
+    // Load both the quote and the dog picture together
     function loadCalmApis() {
         loadQuoteFromForm();
         loadDogFromApi();
     }
 
+    // Check the learning form, then show the matching topic answers
     function showAnswer() {
         $("#answer").empty();
         hideBox($("#answer"), false);
@@ -277,10 +289,10 @@ $(document).ready(function () {
             return;
         }
 
-        // Form only shows the learning topic answers
         showHideSections();
     }
 
+    // Reset the learning form and hide any open answer or midwife panels
     function clearAll() {
         $("#needForm")[0].reset();
         hideBox($("#section-appointments"), true);
@@ -299,6 +311,7 @@ $(document).ready(function () {
         }
     }
 
+    // Stop users picking a midwife date earlier than today
     function setMidwifeDateMin() {
         var today = new Date();
         var year = today.getFullYear();
@@ -315,6 +328,7 @@ $(document).ready(function () {
         $("#midwifeDate").attr("min", year + "-" + month + "-" + day);
     }
 
+    // Toggle the extra About text when Read more is clicked
     $("#aboutReadMore").click(function () {
         if ($("#about-more").attr("hidden")) {
             showBox($("#about-more"), false);
@@ -325,6 +339,7 @@ $(document).ready(function () {
         }
     });
 
+    // Toggle the extra learn list when Read more is clicked
     $("#learnReadMore").click(function () {
         if ($("#learn-more").attr("hidden")) {
             showBox($("#learn-more"), false);
@@ -335,19 +350,23 @@ $(document).ready(function () {
         }
     });
 
+    // Update the greeting when the user chooses who the form is for
     $("input[name='who']").click(function () {
         updateGreeting();
     });
 
+    // When Show me is clicked, show the learning answers (do not reload the page)
     $("#needForm").submit(function () {
         showAnswer();
         return false;
     });
 
+    // Clear the learning form when Clear is clicked
     $("#clearBtn").click(function () {
         clearAll();
     });
 
+    // Open the midwife booking panel
     $("#bookMidwifeBtn").click(function () {
         setMidwifeDateMin();
         $("#midwifeForm").show();
@@ -356,6 +375,7 @@ $(document).ready(function () {
         showBox($("#midwifeBox"), false);
     });
 
+    // Close the midwife booking panel
     $("#closeMidwifeBtn").on("click", function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -363,6 +383,7 @@ $(document).ready(function () {
         return false;
     });
 
+    // Save the midwife booking details and show a short confirmation
     $("#midwifeForm").submit(function () {
         var name = $("#midwifeName").val().trim();
         var date = $("#midwifeDate").val();
@@ -385,6 +406,7 @@ $(document).ready(function () {
         return false;
     });
 
+    // Load a new quote and dog picture when Show me a calm message is clicked
     $("#quoteBtn").click(function () {
         var error = getThemeError();
 
@@ -396,6 +418,7 @@ $(document).ready(function () {
         loadCalmApis();
     });
 
+    // Load only a new quote when New message is clicked
     $("#newQuoteBtn").click(function () {
         var error = getThemeError();
 
@@ -407,6 +430,7 @@ $(document).ready(function () {
         loadQuoteFromForm();
     });
 
+    // Load only a new dog picture when New picture is clicked
     $("#newDogBtn").click(function () {
         var error = getThemeError();
 

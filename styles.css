@@ -1,4 +1,4 @@
-
+/* Soft pink page background and basic text look */
 body {
     background-color: #fff8fb;
     color: #5c4a72;
@@ -8,12 +8,14 @@ body {
     margin: 0;
 }
 
+/* Keep the main content in a centred column */
 .page {
     max-width: 900px;
     margin: 0 auto;
     padding: 16px;
 }
 
+/* Skip link sits off-screen until focused with the keyboard */
 .skip-link {
     position: absolute;
     left: 8px;
@@ -26,70 +28,84 @@ body {
     font-weight: bold;
 }
 
+/* Move the skip link into view when it has focus */
 .skip-link:focus,
 .skip-link:focus-visible {
     top: 8px;
     outline: 2px solid #9b7eb8;
 }
 
+/* Space under the top header */
 header {
     margin-bottom: 12px;
 }
 
+/* Centre the logo and site title */
 .brand {
     text-align: center;
     margin-bottom: 12px;
 }
 
+/* Logo image with no background fill */
 .logo {
     display: block;
     margin: 0 auto 10px auto;
     background: transparent;
 }
 
+/* Space between each main page section */
 .block {
     margin-bottom: 24px;
 }
 
+/* About columns stack on small screens */
 .about-grid {
     display: block;
 }
 
+/* Extra About and learn text starts hidden */
 .about-more,
 .learn-more {
     display: none;
 }
 
+/* Small space around the Read more buttons */
 #aboutReadMore,
 #learnReadMore {
     margin-top: 4px;
     margin-bottom: 8px;
 }
 
+/* Tighten space above the extra learn list */
 #learn-more {
     margin-top: 0;
 }
 
+/* Strong colour for the Urgent label */
 .urgent-label {
     color: #a14d6a;
     margin-bottom: 4px;
 }
 
+/* Outline around urgent warning sections */
 .topic-section.urgent {
     outline: 2px solid #a14d6a;
 }
 
+/* Main page title style */
 h1 {
     color: #9b7eb8;
     font-size: 1.5rem;
     margin: 0;
 }
 
+/* Subheading colours */
 h2,
 h3 {
     color: #8a5a78;
 }
 
+/* Navigation bar look on phones (links in a list) */
 .nav-list {
     list-style: none;
     padding: 8px;
@@ -99,63 +115,74 @@ h3 {
     border: 1px solid #c9b3e6;
 }
 
+/* Each nav item on its own line on small screens */
 .nav-list li {
     display: block;
     margin: 6px 0;
 }
 
+/* Purple links in the nav with no underline by default */
 .nav-list a {
     color: #9b7eb8;
     text-decoration: none;
 }
 
+/* Underline nav links on hover or keyboard focus */
 .nav-list a:hover,
 .nav-list a:focus {
     text-decoration: underline;
     color: #7f6499;
 }
 
-/* Attribute selectors */
+/* Make in-page links (href starts with #) bold */
 a[href^="#"] {
     font-weight: bold;
 }
 
+/* Space under each form question */
 .form-group {
     margin-bottom: 16px;
     border: none;
     padding: 0;
 }
 
+/* Box around radio and checkbox groups */
 fieldset.form-group {
     border: 1px solid #c9b3e6;
     padding: 10px 12px;
     border-radius: 4px;
 }
 
+/* Bold legend text for each fieldset */
 fieldset.form-group legend {
     font-weight: bold;
     padding: 0 4px;
     color: #5c4a72;
 }
 
+/* Red-pink colour for the required-field star */
 .required {
     color: #a14d6a;
 }
 
+/* Space between each radio or checkbox choice */
 .choice {
     margin: 6px 0;
 }
 
+/* Labels above form fields sit on their own line */
 .form-group label {
     display: block;
     margin-bottom: 4px;
 }
 
+/* Labels next to radios and checkboxes stay on the same line */
 .choice label {
     display: inline;
     margin-left: 4px;
 }
 
+/* Full-width look for text, date and select inputs */
 select[name="language"],
 select[name="quoteTheme"],
 select[name="midwifeTime"],
@@ -173,6 +200,7 @@ input[name="midwifeDate"] {
     color: #5c4a72;
 }
 
+/* Stronger border when a form control is focused */
 select[name="language"]:focus,
 select[name="quoteTheme"]:focus,
 select[name="midwifeTime"]:focus,
@@ -182,34 +210,41 @@ input[name="midwifeDate"]:focus {
     outline: 2px solid #c9b3e6;
 }
 
+/* Softer pink border when a required select is empty */
 select[name="language"]:required:invalid,
 select[name="quoteTheme"]:required:invalid {
     border-color: #c48bb0;
 }
 
+/* Highlight the label when a radio or checkbox is selected */
 input[type="radio"]:checked + label,
 input[type="checkbox"]:checked + label {
     color: #9b7eb8;
     font-weight: bold;
 }
 
+/* Space above the form action buttons */
 .form-actions {
     margin-top: 8px;
 }
 
+/* Space under the Show me and Clear buttons on phones */
 .form-actions-left {
     margin-bottom: 16px;
 }
 
+/* Midwife booking prompt aligns left on phones */
 .form-actions-right {
     text-align: left;
 }
 
+/* Bold question next to the midwife button */
 .midwife-question {
     margin: 0 0 6px 0;
     font-weight: bold;
 }
 
+/* Shared button size and shape */
 .btn-main,
 .btn-clear,
 .btn-midwife {
@@ -222,41 +257,48 @@ input[type="checkbox"]:checked + label {
     cursor: pointer;
 }
 
+/* Main purple button (Show me) */
 .btn-main {
     background-color: #9b7eb8;
     border: 1px solid #9b7eb8;
     color: #fff;
 }
 
+/* Darker purple when hovering or focusing the main button */
 .btn-main:hover,
 .btn-main:focus {
     background-color: #7f6499;
     border-color: #7f6499;
 }
 
+/* White Clear and Close buttons */
 .btn-clear {
     background-color: #fff;
     color: #5c4a72;
     border: 1px solid #c9b3e6;
 }
 
+/* Light purple fill when hovering Clear or Close */
 .btn-clear:hover,
 .btn-clear:focus {
     background-color: #f3e8ff;
 }
 
+/* Pink midwife booking button */
 .btn-midwife {
     background-color: #c48bb0;
     border: 1px solid #c48bb0;
     color: #fff;
 }
 
+/* Darker pink when hovering the midwife button */
 .btn-midwife:hover,
 .btn-midwife:focus {
     background-color: #a14d6a;
     border-color: #a14d6a;
 }
 
+/* Soft smaller button for Read more and New message */
 .btn-soft {
     display: inline-block;
     margin-top: 10px;
@@ -270,12 +312,14 @@ input[type="checkbox"]:checked + label {
     border: 1px solid #c9b3e6;
 }
 
+/* Slightly stronger fill when hovering soft buttons */
 .btn-soft:hover,
 .btn-soft:focus {
     background-color: #f3e8ff;
     border-color: #9b7eb8;
 }
 
+/* Shared padding for info, result, warning and topic boxes */
 .info-box,
 .result-box,
 .warn-box,
@@ -286,37 +330,44 @@ input[type="checkbox"]:checked + label {
     border-radius: 4px;
 }
 
+/* Light purple info box (greeting and confirmations) */
 .info-box {
     background-color: #f3e8ff;
     border: 1px solid #c9b3e6;
     color: #5c4a72;
 }
 
+/* Soft result box for form messages */
 .result-box {
     background-color: #f7f2fa;
     border: 1px solid #c9b3e6;
 }
 
+/* Warm warning box for the footer disclaimer */
 .warn-box {
     background-color: #fff6e8;
     border: 1px solid #e0c48a;
 }
 
+/* White topic boxes for answers and calm content */
 .topic-box {
     border: 1px solid #c9b3e6;
     background-color: #fff;
 }
 
+/* Topic answer sections start hidden until Show me */
 .topic-section {
     display: none;
 }
 
+/* Stronger border and pink fill for urgent topics */
 .topic-section.urgent {
     border-width: 2px;
     border-color: #c48bb0;
     background-color: #fff0f7;
 }
 
+/* These panels start hidden and are shown by JavaScript */
 #greeting,
 #answer,
 #quoteBox,
@@ -328,22 +379,26 @@ input[type="checkbox"]:checked + label {
     display: none;
 }
 
+/* Keep dog photos within the page width */
 #dogBox img {
     max-width: 100%;
     height: auto;
     border-radius: 6px;
 }
 
+/* Extra note box style (same soft purple family) */
 .note {
     background-color: #f3e8ff;
     border: 1px solid #c9b3e6;
 }
 
+/* Small centred footer text */
 .footer-text {
     text-align: center;
     font-size: 0.85rem;
 }
 
+/* Boxed Back to top link */
 .back-to-top-box {
     text-align: center;
     margin: 12px auto;
@@ -354,24 +409,27 @@ input[type="checkbox"]:checked + label {
     border-radius: 4px;
 }
 
+/* Purple Back to top link text */
 .back-to-top-box a {
     color: #9b7eb8;
     text-decoration: none;
     font-weight: bold;
 }
 
+/* Underline Back to top on hover or focus */
 .back-to-top-box a:hover,
 .back-to-top-box a:focus {
     color: #7f6499;
     text-decoration: underline;
 }
 
+/* Space above the footer */
 footer {
     margin-top: 16px;
     padding-top: 8px;
 }
 
-/* Larger phones and up */
+/* Larger phones and up: bigger text and side-by-side nav links */
 @media (min-width: 576px) {
     body {
         font-size: 16px;
@@ -387,7 +445,7 @@ footer {
     }
 }
 
-/* Tablets and up */
+/* Tablets and up: two-column About and side-by-side form actions */
 @media (min-width: 768px) {
     body {
         font-size: 17px;
@@ -435,7 +493,7 @@ footer {
     }
 }
 
-/* Desktops */
+/* Desktops: slightly larger title and footer text */
 @media (min-width: 992px) {
     h1 {
         font-size: 2.2rem;
